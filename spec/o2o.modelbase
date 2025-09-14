@@ -1,0 +1,123 @@
+@persistence(name='fstobj')
+@name(label='第一层对象', singular='first_object', plural='first_objects')
+first_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='first')
+  @name(label='专用属性')
+  first: string(100),
+  
+  @persistence(name='type')
+  @name(label='类型')
+  type: enum[0:好的,1:非常好的,2:最好的],
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@persistence(name='secobj')
+@name(label='第二层对象', singular='second_object', plural='second_objects')
+second_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: &first_object(id),
+  
+  @persistence(name='serial')
+  @name(label='序列号')
+  serial: string(100),
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='second')
+  @name(label='专用属性')
+  second: string(100),
+  
+  @persistence(name='type')
+  @name(label='类型')
+  type: enum[0:好的,1:非常好的,2:最好的],
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@persistence(name='throbj')
+@name(label='第三层对象', singular='third_object', plural='third_objects')
+third_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: &second_object(id),
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='type')
+  @name(label='类型')
+  type: enum[0:好的,1:非常好的,2:最好的],
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+  
+>

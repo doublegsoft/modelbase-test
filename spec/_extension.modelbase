@@ -1,0 +1,86 @@
+@persistence(name='simobj')
+@name(label='简单对象', singular='simple_object', plural='simple_objects')
+@generated
+simple_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+> 
+
+@persistence(name='anthobj')
+@name(label='另外对象', singular='another_object', plural='another_objects')
+another_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='reference_id')
+  @name(label='关联标识')
+  @reference(value='id', name='reference')
+  reference_id: string(100),
+  
+  @persistence(name='reference_type')
+  @name(label='类型')
+  @reference(value='type', name='reference')
+  reference_type: string(100),
+  
+  @persistence(name='status')
+  @name(label='状态')
+  status: string(100),
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@name(label='简单对象')
+@extension(objects='another_object(reference_id)')
+simple_object_<
+  
+  reference_type = SIMPLE_OBJECT: string,
+  
+  status = IT: string
+  
+>

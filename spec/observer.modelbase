@@ -1,0 +1,137 @@
+@persistence(name='tn_fcm_clb')
+@name(label='俱乐部', singular='club', plural='clubs')
+@entity
+@aggregate
+club<
+
+  @persistence(name='clbid')
+  @name(label='俱乐部标识')
+  id!!: id,
+  
+  @persistence(name='clbnm')
+  @name(label='俱乐部名称')
+  name: string(100),
+  
+  @persistence(name='dist')
+  @name(label='地区')
+  @listable
+  district: string(100),
+  
+  @persistence(name='adr')
+  @name(label='地址')
+  @listable
+  address: string(100),
+  
+  @persistence(name='clbslg')
+  @name(label='队伍口号')
+  club_slogan = '我们是冠军': string(100),
+  
+  @persistence(name='tmcnt')
+  @name(label='队伍数量')
+  @listable
+  @comparable(operator='count', attribute='teams')
+  team_count = 0: long,
+  
+  @persistence(name='highhnid')
+  @name(label='最高荣誉')
+  @listable
+  @comparable(operator='max', attribute='honors(weight)')
+  highest_honor = 0: &club_honor(id),
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now,
+  
+  @name(label='足球队', singular='team')
+  teams: &football_team(id)[],
+  
+  @name(label='荣誉', singular='honor')
+  honors: &club_honor(id)[]
+  
+>
+
+@persistence(name='tn_fcm_clbhn')
+@name(label='俱乐部荣誉', singular='club_honor', plural='club_honors')
+@entity
+club_honor<
+  
+  @persistence(name='clbhnid')
+  @name(label='俱乐部荣誉标识')
+  id!!: id,
+  
+  @persistence(name='clbid')
+  @name(label='俱乐部标识')
+  club: &club(id),
+  
+  @persistence(name='clbhnnm')
+  @name(label='荣誉名称')
+  name: string(100),
+  
+  @persistence(name='wgt')
+  @name(label='荣誉权重')
+  @comparable
+  @arithmeticable
+  weight: int,
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+  
+>
+
+@persistence(name='tn_fcm_fbtm')
+@name(label='足球队', singular='football_team', plural='football_team')
+@entity
+football_team<
+
+  @persistence(name='fbtmid')
+  @name(label='足球队标识')
+  id!!: id,
+  
+  @persistence(name='clbid')
+  @name(label='所属俱乐部')
+  club: &club(id),
+  
+  @persistence(name='fbtmnm')
+  @name(label='足球队队名')
+  name: string(100),
+  
+  @persistence(name='dist')
+  @name(label='地区')
+  @listable
+  district: string(100),
+  
+  @persistence(name='adr')
+  @name(label='地址')
+  @listable
+  address: string(100),
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+  
+>
