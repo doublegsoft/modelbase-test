@@ -5,7 +5,7 @@ export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbas
 
 export OUTPUT_ROOT=out
 
-export SPEC=_meta
+export SPEC=meta
 export APPNAME=meta
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase

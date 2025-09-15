@@ -1,0 +1,71 @@
+@persistence(name='placeholder')
+@name(label='监测指标', plural='placeholders')
+@value
+placeholder<
+
+  @persistence(name='collect_time')
+  @name(label='采集时间')
+  id!!: long,
+  
+  @persistence(name='metric_code')
+  @name(label='指标编码')
+  name: string(100)
+
+>
+
+@persistence(name='tn_dbm_metrdat')
+@name(label='监测指标', plural='metric_data_list')
+@value
+metric_data<
+
+  @persistence(name='collect_time')
+  @name(label='采集时间')
+  collect_time!! = now: datetime,
+  
+  @persistence(name='metric_code')
+  @name(label='指标编码')
+  metric_code!!: string(100),
+  
+  @persistence(name='metric_name')
+  @name(label='指标名称')
+  metric_name: string(100),
+  
+  @persistence(name='result')
+  @name(label='结果')
+  result: string(100),
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@name(label='体测')
+@pivot(detail='metric_data', key='metric_code', value='result')
+system_health<
+
+  @name(label='采集时间')
+  collect_time = now: datetime,
+
+  @name(label='CPU使用量')
+  cpu_usage: number(12,4),
+
+  @name(label='内存使用量')
+  memory_usage: number(12,4)
+  
+>

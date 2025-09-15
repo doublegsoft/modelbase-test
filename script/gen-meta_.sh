@@ -2,10 +2,11 @@ export MODELBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/mo
 export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-modelbase-6.0-shaded.jar
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-4.5-shaded.jar
+
 export OUTPUT_ROOT=out
 
-export SPEC=o2o
-export APPNAME=o2o
+export SPEC=meta_
+export APPNAME=meta
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
