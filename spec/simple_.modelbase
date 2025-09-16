@@ -64,9 +64,6 @@ simple_object_<
 
   name = HELLO:string(100),
   
-
-  status = 03: string(100),
-  
-  another_objects: &another_object(id)[]
+  status = 03: string(100)
   
 >
