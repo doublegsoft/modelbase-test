@@ -5,7 +5,7 @@ export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbas
 
 export OUTPUT_ROOT=out
 
-export SPEC=pivot+entity_detail
+export SPEC=pivot+entity-detail
 export APPNAME=pivotentitydetail
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase

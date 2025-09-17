@@ -1,0 +1,100 @@
+@persistence(name='simple_object')
+@name(label='简单对象', singular='simple_object', plural='simple_objects')
+@generated
+simple_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='status')
+  @name(label='状态')
+  status: string(100),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='state')
+  @name(label='系统状态状态')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+> 
+
+@persistence(name='another_object')
+@name(label='另外对象', singular='another_object', plural='another_objects')
+another_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='status')
+  @name(label='状态')
+  status: string(100),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='state')
+  @name(label='系统状态状态')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+  
+>
+
+@persistence(name='conjuncting_object')
+@name(label='交叉对象', singular='conjuncting_object', plural='conjuncting_objects')
+@value
+conjuncting_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  simple_object!!: &simple_object(id),
+  
+  @persistence(name='status')
+  @name(label='状态')
+  another_object!!: &another_object(id),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time!! = now: datetime,
+  
+  @persistence(name='type')
+  @name(label='类型')
+  type: string,
+  
+  @persistence(name='state')
+  @name(label='系统状态状态')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+  
+>
+
+@name(label='简单继承对象')
+simple_object_<
+  
+  @name(name='名称', note='在继承对象中给名称赋予默认值')
+  name = HELLO:string(100),
+  
+  status = 03: string(100),
+  
+  @name(name='连接对象', singular='another_object', note='在继承对象中给名称赋予默认值')
+  @conjunction(name='conjuncting_object')
+  another_objects: &another_object(id)[]
+  
+>
