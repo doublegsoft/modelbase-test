@@ -1,6 +1,5 @@
 @persistence(name='tn_dbm_metrdat')
 @name(label='监测指标', plural='metric_data_list')
-@value
 metric_data<
 
   @persistence(name='id')
