@@ -15,7 +15,7 @@ export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
 ##                                      C                                     ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x")
+REPOS=("c-poco@std-1.x" "c-sql@std-1.x")
 
 for repo in "${REPOS[@]}"
 do
@@ -68,7 +68,7 @@ java -jar $PROJBASE_JAR \
 \"imports\":\
 \[\],\
 \"dependencies\":\
-\[\"poco\"\]\
+\[\"poco\",\"sql\"\]\
 \} 2>&1
 
 mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
