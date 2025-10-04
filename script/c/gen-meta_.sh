@@ -68,5 +68,10 @@ java -jar $PROJBASE_JAR \
 \"imports\":\
 \[\],\
 \"dependencies\":\
-\[\]\
+\[\"poco\"\]\
 \} 2>&1
+
+mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
+/usr/local/bin/cmake ../.. && make
+cd $PROJECT_ROOT/../..
+
