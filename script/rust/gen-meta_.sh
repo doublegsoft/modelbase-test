@@ -3,7 +3,7 @@ export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-model
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-4.5-shaded.jar
 
-export OUTPUT_ROOT=out/c
+export OUTPUT_ROOT=out/rust
 
 export SPEC=meta_
 export APPNAME=meta
@@ -12,14 +12,14 @@ export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
 ################################################################################
 ##                                                                            ##
-##                                      C                                     ##
+##                                    RUST                                    ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x" "c-sql@std-1.x")
+REPOS=("rust-poco@std-1.x" "rust-sql@std-1.x")
 
 for repo in "${REPOS[@]}"
 do
-export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/c/$repo
+export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/rust/$repo
 
 java -jar $MODELBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -33,9 +33,9 @@ java -jar $MODELBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
-\"language\":\"c\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.rust.RustConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.rust.RustNamingConvention\",\
+\"language\":\"rust\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
@@ -45,10 +45,10 @@ done
 
 ################################################################################
 ##                                                                            ##
-##                         COMMAND LINE INTERFACE (C)                         ##
+##                        COMMAND LINE INTERFACE (RUST)                       ##
 ##                                                                            ##
 ################################################################################
-export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@std-1.x
+export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/rust/rust-lib@std-1.x
 
 java -jar $PROJBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -62,15 +62,13 @@ java -jar $PROJBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
-\"language\":\"c\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.rust.RustConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.rust.RustNamingConvention\",\
+\"language\":\"rust\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
 \[\"poco\",\"sql\"\]\
 \} 2>&1
 
-mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
-/usr/local/bin/cmake ../.. && make
 
