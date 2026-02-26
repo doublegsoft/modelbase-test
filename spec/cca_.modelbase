@@ -1,0 +1,6 @@
+@name(label='资产')
+cognition_asset_<
+  
+  role! = 'RF': enum[PR:主要资料,RF:参考资料,EX:示例]
+  
+>

@@ -60,7 +60,7 @@ metric_data<
 system_health<
 
   @name(label='采集时间')
-  collect_time = now: datetime,
+  collect_time: now,
 
   @name(label='CPU使用量')
   cpu_usage: number(12,4),

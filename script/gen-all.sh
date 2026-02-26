@@ -12,6 +12,7 @@
 ./script/java/gen-pivot+entity-detail.sh
 ./script/java/gen-pivot+value-detail.sh
 ./script/java/gen-simple_.sh
+./script/java/gen-bpe.sh
 
 #
 # c
