@@ -13,7 +13,6 @@ category<
 
 @persistence(name='metable_object')
 @name(label='可元型扩展的对象', plural='metable_objects')
-@generated
 metable_object<
   
   @persistence(name='id')
@@ -70,9 +69,9 @@ metable_object_meta<
   property_value: string(100)
 >
 
-@name(label='元型扩展的对象', plural='metable_objects')
+@name(label='元型扩展的对象', plural='metable_fulls')
 @meta(master='metable_object', detail='metable_object_meta')
-metable_object_<
+metable_full<
   
   @name(label='属性A')
   meta_prop_a: string,

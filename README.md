@@ -208,3 +208,46 @@ another_<
 ## {conjunction} 
 
 单个链接对象保存
+
+## {aggregate root}
+
+```
+
+@name(label='聚合根', plural='simple_anothers')
+aggregate_root<
+
+  @name(label='基础')
+  simple: &simple(id),
+  
+  @name(label='另一个')
+  another: &another(id),
+  
+>
+
+```
+
+## {composite row}
+
+```
+
+@name(label='合成行', plural='composite_rows')
+composite_row<
+
+  @original(object='simple', attribute='id')
+  @name(label='简单标识')
+  simple_id: long,
+  
+  @original(object='another', attribute='id')
+  @name(label='另一个标识')
+  another_id!: long,
+  
+  @original(object='simple', attribute='name')
+  @name(label='简单名称')
+  simple_name: string(200),
+  
+  @original(object='another', attribute='name')
+  @name(label='另一个名称')
+  another_name: string(200)
+>
+
+```

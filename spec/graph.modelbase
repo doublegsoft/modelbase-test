@@ -1,0 +1,63 @@
+@entity
+@persistence(name='node')
+@name(label='节点', plural='nodes')
+node<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cognasstnm')
+  @name(label='名称')
+  name!: string(200),
+
+  @persistence(name='tit')
+  @name(label='简称')
+  title: string(500),
+
+  @persistence(name='loc')
+  @name(label='文件地址')
+  location: string(1000),
+
+  @persistence(name='descr')
+  @name(label='描述')
+  description: string(2000),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@entity
+@persistence(name='node_connection')
+@name(label='知识入口', plural='node_connections')
+node_connection<
+
+  @persistence(name='cognentid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='stdmid')
+  @name(label='体育场')
+  previous!: &node(id),
+
+  @persistence(name='hmid')
+  @name(label='主队')
+  current: &node(id),
+  
+  @persistence(name='awyid')
+  @name(label='客队')
+  next: &node(id),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>

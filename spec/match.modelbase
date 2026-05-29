@@ -1,0 +1,91 @@
+@entity
+@persistence(name='team')
+@name(label='球队', plural='teams')
+team<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cognasstnm')
+  @name(label='名称')
+  name!: string(200),
+
+  @persistence(name='tit')
+  @name(label='简称')
+  title: string(500),
+
+  @persistence(name='loc')
+  @name(label='文件地址')
+  location: string(1000),
+
+  @persistence(name='descr')
+  @name(label='描述')
+  description: string(2000),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@entity
+@persistence(name='stadium')
+@name(label='标签', plural='stadiums')
+stadium<
+
+  @persistence(name='cogntgid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cogntgnm')
+  @name(label='名称')
+  name!: string(200),
+
+  @persistence(name='descr')
+  description: string(1000),
+
+  @persistence(name='crttm')
+  created_time = now: datetime
+>
+
+@entity
+@persistence(name='tn_cca_cognent')
+@name(label='知识入口', plural='third_objects')
+match<
+
+  @persistence(name='cognentid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='stdmid')
+  @name(label='体育场')
+  stadium!: &stadium(id),
+
+  @persistence(name='hmid')
+  @name(label='主队')
+  home: &team(id),
+
+  @persistence(name='hmsc')
+  @name(label='主队得分')
+  home_score: int,
+  
+  @persistence(name='awyid')
+  @name(label='客队')
+  away: &team(id),
+
+  @persistence(name='awysc')
+  @name(label='客队得分')
+  away_score: int,
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>

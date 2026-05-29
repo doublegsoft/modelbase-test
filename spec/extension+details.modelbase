@@ -1,0 +1,70 @@
+@persistence(name='article')
+@name(label='文章', plural='articles')
+article<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cognasstnm')
+  @name(label='名称')
+  name!: string(200),
+
+  @persistence(name='cognassttyp')
+  @name(label='类型')
+  type!: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接]
+>
+
+@persistence(name='article_engagement')
+@name(label='文章互动', plural='article_engagements')
+article_engagement<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  article!!: &article(id),
+
+  @persistence(name='vw')
+  @name(label='浏览次数')
+  view_count: int,
+
+  @persistence(name='fw')
+  @name(label='转发次数')
+  forward_count: int,
+  
+  @persistence(name='lk')
+  @name(label='点赞次数')
+  like_count: int
+>
+
+@persistence(name='positive_review')
+@name(label='用户评价', plural='positive_reviews')
+positive_review<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='vw')
+  @name(label='名称')
+  name: string(100),
+
+  @persistence(name='fw')
+  @name(label='转发次数')
+  @reference(value='id', name='reference')
+  reference_id: long,
+  
+  @persistence(name='lk')
+  @name(label='点赞次数')
+  @reference(value='type', name='reference')
+  reference_type: string(100)
+>
+
+@name(label='在线用户', plural='online_users')
+@extension(master='article', details='article_engagement;positive_review(reference_id)')
+article_extension<
+
+  token: string,
+
+  login_time: datetime
+
+>

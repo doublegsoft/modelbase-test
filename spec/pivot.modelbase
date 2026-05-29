@@ -1,3 +1,16 @@
+@persistence(name='category')
+@name(label='类别目录', plural='categories')
+category<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: long,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string
+>
+
 @persistence(name='examination_report')
 @name(label='检查报告', singular='examination_report', plural='examination_reports')
 examination_report<
@@ -9,6 +22,10 @@ examination_report<
   @persistence(name='name')
   @name(label='名称')
   name: string(100),
+  
+  @persistence(name='category')
+  @name(label='类别')
+  category: &category(id),
   
   @persistence(name='state')
   @name(label='名称')
