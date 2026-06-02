@@ -2,6 +2,8 @@ export MODELBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/mo
 export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-modelbase-7.0-shaded.jar
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-7.0-shaded.jar
+export TATABASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/tatabase/03.Development/tatabase-data
+export TATABASE_JAR=/Users/christian/export/opt/tatabase/protosys-plugin-tatabase-7.0-shaded.jar
 
 export OUTPUT_ROOT=out
 
@@ -17,7 +19,7 @@ export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x
 ################################################################################
 REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" \
   "java-dto@gfc-2.x" "java-dtokit@gfc-1.x" \
-  "java-orm@mybatis-1.x" "java-orm@rdbms-1.x" \
+  "java-orm@mybatis-1.x" "java-orm@mybatis-2.x" "java-orm@rdbms-1.x" \
   "java-test@postman-1.x" "java-mvc@spring-2.x" \
   "java-tx@gfc-1.x" "java-tx@jakarta-2.x")
 
@@ -76,3 +78,36 @@ java -jar $PROJBASE_JAR \
 \} 2>&1
 
 mvn clean package -f $PROJECT_ROOT/pom.xml
+
+################################################################################
+##                                                                            ##
+##                                    TEST                                    ##
+##                                                                            ##
+################################################################################
+REPOS=("markdown/markdown-dataspec@llm-1.x")
+
+for repo in "${REPOS[@]}"
+do
+export TEMPLATE_ROOT=$TATABASE_DATA_ROOT/$repo
+
+java -jar $TATABASE_JAR \
+--model=$MOBELBASE_MODEL \
+--template-root=$TEMPLATE_ROOT \
+--output-root=$PROJECT_ROOT \
+--license=LICENSE \
+--globals=\
+\{\
+\"application\":\"$APPNAME\",\
+\"namespace\":\"$NAMESPACE\",\
+\"artifact\":\"$APPNAME\",\
+\"version\":\"1.0.0\",\
+\"description\":\"\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.java.JavaConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.java.JavaNamingConvention\",\
+\"language\":\"java\",\
+\"imports\":\
+\[\],\
+\"dependencies\":\
+\[\]\
+\} 2>&1
+done

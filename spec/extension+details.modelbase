@@ -9,6 +9,18 @@ article<
   @persistence(name='cognasstnm')
   @name(label='名称')
   name!: string(200),
+  
+  @persistence(name='bdt')
+  @name(label='出生日期')
+  birth_date: date,
+  
+  @persistence(name='sttm')
+  @name(label='开始时间')
+  start_time: datetime,
+  
+  @persistence(name='endtm')
+  @name(label='结束时间')
+  end_time: datetime,
 
   @persistence(name='cognassttyp')
   @name(label='类型')
@@ -48,13 +60,17 @@ positive_review<
   @name(label='名称')
   name: string(100),
 
+  @persistence(name='rvwtm')
+  @name(label='评价时间')
+  review_time: datetime,
+
   @persistence(name='fw')
-  @name(label='转发次数')
+  @name(label='引用表示')
   @reference(value='id', name='reference')
   reference_id: long,
   
   @persistence(name='lk')
-  @name(label='点赞次数')
+  @name(label='引用类型')
   @reference(value='type', name='reference')
   reference_type: string(100)
 >

@@ -17,7 +17,7 @@ export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x
 ################################################################################
 REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" \
   "java-dto@gfc-2.x" "java-dtokit@gfc-1.x" \
-  "java-orm@mybatis-1.x" "java-orm@rdbms-1.x" \
+  "java-orm@mybatis-1.x" "java-orm@mybatis-2.x" "java-orm@rdbms-1.x" \
   "java-test@postman-1.x" "java-mvc@spring-2.x" \
   "java-tx@gfc-1.x" "java-tx@jakarta-2.x")
 
