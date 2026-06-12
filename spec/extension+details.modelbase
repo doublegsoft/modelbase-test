@@ -56,9 +56,9 @@ positive_review<
   @name(label='标识')
   id!!: long,
 
-  @persistence(name='vw')
-  @name(label='名称')
-  name: string(100),
+  @persistence(name='cntt')
+  @name(label='内容')
+  content: string(1000),
 
   @persistence(name='rvwtm')
   @name(label='评价时间')
@@ -77,6 +77,7 @@ positive_review<
 
 @name(label='在线用户', plural='online_users')
 @extension(master='article', details='article_engagement;positive_review(reference_id)')
+@composite
 article_extension<
 
   token: string,

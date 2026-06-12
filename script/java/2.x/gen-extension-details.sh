@@ -84,19 +84,21 @@ mvn clean package -f $PROJECT_ROOT/pom.xml
 ##                                    TEST                                    ##
 ##                                                                            ##
 ################################################################################
-REPOS=("markdown/markdown-dataspec@llm-1.x")
+REPOS=("markdown/markdown-dataspec@llm-1.x" "tebot/tebot-bnrlike@selenium-1.x")
 
 for repo in "${REPOS[@]}"
 do
 export TEMPLATE_ROOT=$TATABASE_DATA_ROOT/$repo
 
 java -jar $TATABASE_JAR \
---model=$MOBELBASE_MODEL \
+--modelbase-model=$MOBELBASE_MODEL \
+--guidbase-model=$GUIDBASE_MODEL \
 --template-root=$TEMPLATE_ROOT \
 --output-root=$PROJECT_ROOT \
 --license=LICENSE \
 --globals=\
 \{\
+\"projectRoot\":\"$PROJECT_ROOT\",\
 \"application\":\"$APPNAME\",\
 \"namespace\":\"$NAMESPACE\",\
 \"artifact\":\"$APPNAME\",\

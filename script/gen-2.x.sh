@@ -1,3 +1,4 @@
+script/java/2.x/gen-plainlike.sh
 script/java/2.x/gen-aggregatelike.sh
 script/java/2.x/gen-extension-details.sh
 script/java/2.x/gen-extension-master.sh

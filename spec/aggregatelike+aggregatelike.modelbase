@@ -121,6 +121,10 @@ fourth_object<
   @persistence(name='cogncepnm')
   @name(label='名称')
   name!: string(200),
+  
+  @persistence(name='throbj')
+  @name(label='第三对象')
+  third_object: &third_object(id),
 
   @persistence(name='tit')
   @name(label='标题')
@@ -178,7 +182,6 @@ fifth_object<
 >
 
 @name(label='congnition_aggregate', plural='aggregate_objects')
-@composite
 aggregate_object<
 
   @name(label='cognentid')
@@ -188,5 +191,18 @@ aggregate_object<
   second_object: &second_object(id),
   
   @name(label='topic')
-  third_object: &third_object(id)
+  third_object: &third_object(id),
+  
+  @name(label='anothers', singular='another')
+  anothers: &aggregate_object_another(fourth_object)[]
+>
+
+@name(label='aggregate_object_another', plural='aggregate_object_anothers')
+aggregate_object_another<
+
+  @name(label='cognentid')
+  fourth_object: &fourth_object(id),
+
+  @name(label='cogncepid')
+  fifth_object: &fifth_object(id)
 >

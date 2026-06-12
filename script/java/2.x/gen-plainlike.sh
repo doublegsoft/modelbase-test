@@ -5,8 +5,8 @@ export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbas
 
 export OUTPUT_ROOT=out
 
-export SPEC=aggregatelike
-export APPNAME=aggregatelike
+export SPEC=plainlike
+export APPNAME=plainlike
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x
