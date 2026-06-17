@@ -4,7 +4,7 @@ first_object<
   
   @persistence(name='id')
   @name(label='标识')
-  id!!: id,
+  id!!: long,
   
   @persistence(name='name')
   @name(label='名称')
@@ -47,7 +47,7 @@ second_object<
   @name(label='标识')
   id!!: &first_object(id),
   
-  @persistence(name='serial')
+  @persistence(name='ser')
   @name(label='序列号')
   serial: string(100),
   
@@ -55,7 +55,7 @@ second_object<
   @name(label='名称')
   name: string(100),
   
-  @persistence(name='second')
+  @persistence(name='sec')
   @name(label='专用属性')
   second: string(100),
   

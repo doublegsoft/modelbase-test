@@ -8,3 +8,4 @@ script/java/2.x/gen-meta_.sh
 script/java/2.x/gen-meta_full.sh
 script/java/2.x/gen-pivot.sh
 script/java/2.x/gen-simple_.sh
+script/java/2.x/gen-o2o.sh
