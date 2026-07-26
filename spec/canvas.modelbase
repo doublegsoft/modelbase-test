@@ -1,0 +1,80 @@
+@module(name='canvas_engine')
+
+// ==========================================
+// 1. 画布主表 (Canvas Board)
+// 物理表名缩写: cnvbrd
+// ==========================================
+@persistence(name='cnvbrd')
+@name(label='画布', singular='canvas', plural='canvases')
+@entity
+canvas <
+  @persistence(name='id') id!!: long,
+  
+  @persistence(name='nm')
+  @name(label='画布名称') name: string(100),
+
+  @persistence(name='wdt') @name(label='宽度') width: integer,
+  @persistence(name='hgt') @name(label='高度') height: integer,
+
+  @persistence(name='credt') created_time = now: datetime,
+  
+  // 一对多：画布上的元素
+  @name(label='画布元素列表')
+  elements: &canvas_element(canvas)[]
+>
+
+// ==========================================
+// 2. 元素基础表 (Canvas Element)
+// 物理表名缩写: cnvelm
+// 存储所有元素的共同物理特征
+// ==========================================
+@persistence(name='cnvelm')
+@name(label='画布元素', singular='canvas_element', plural='canvas_elements')
+@entity
+canvas_element <
+  @persistence(name='id') id!!: long,
+
+  @persistence(name='cnvid')
+  @name(label='所属画布')
+  canvas: &canvas(id),
+
+  @persistence(name='typ')
+  @name(label='元素类型')
+  type: enum[RECT:矩形, CIRC:圆形, TEXT:文本, LINE:线条, IMAG:图片],
+
+  // --- 坐标与变换 (共同特征) ---
+  @persistence(name='posx') @name(label='X坐标') x: number(12, 2),
+  @persistence(name='posy') @name(label='Y坐标') y: number(12, 2),
+  @persistence(name='zidx') @name(label='层级') z_index: integer,
+  @persistence(name='rot')  @name(label='旋转角度') rotation: number(5, 2),
+  @persistence(name='sclx') @name(label='横向缩放') scale_x: number(5, 2),
+  @persistence(name='scly') @name(label='纵向缩放') scale_y: number(5, 2),
+
+  @persistence(name='opct') @name(label='透明度') opacity: number(3, 2),
+
+  // 一对多：特定类型的业务属性
+  @name(label='元素属性元数据')
+  meta_data: &element_meta(element)[]
+>
+
+// ==========================================
+// 3. 元素扩展属性表 (Element Meta)
+// 物理表名缩写: elmmta
+// 采用 EAV 模式，保证 3NF 的同时支持无限扩展
+// ==========================================
+@persistence(name='elmmta')
+@name(label='元素元数据', singular='element_meta', plural='element_metas')
+@value
+element_meta <
+  @persistence(name='elmid')
+  @name(label='所属元素')
+  element!!: &canvas_element(id),
+
+  @persistence(name='metaky') // meta_key -> metaky
+  @name(label='属性键')
+  property_key!!: string(50), // 例如: 'radius', 'font_size', 'content'
+
+  @persistence(name='metavl') // meta_val -> metavl
+  @name(label='属性值')
+  property_value: string(1000)
+>

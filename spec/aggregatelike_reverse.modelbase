@@ -41,14 +41,6 @@ first_object<
   @persistence(name='dur')
   @name(label='时长')
   duration: long,
-  
-  @persistence(name='second_object')
-  @name(label='第二对象')
-  second_object: &second_object(id),
-  
-  @persistence(name='third_object')
-  @name(label='第三对象')
-  third_object: &third_object(id),
 
   @persistence(name='crttm')
   @name(label='创建时间')
@@ -71,6 +63,10 @@ second_object<
   @persistence(name='cogntgnm')
   @name(label='名称')
   name!: string(200),
+  
+  @persistence(name='first_object')
+  @name(label='第一对象')
+  first_object: &first_object(id),
 
   @persistence(name='descr')
   description: string(1000),
@@ -95,6 +91,10 @@ third_object<
   @persistence(name='enttyp')
   @name(label='类型')
   type!: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
+  
+  @persistence(name='first_object')
+  @name(label='第一对象')
+  first_object: &first_object(id),
 
   @persistence(name='tit')
   @name(label='标题')
@@ -137,6 +137,10 @@ fourth_object<
   @persistence(name='defn')
   @name(label='定义')
   definition: string(3000),
+  
+  @persistence(name='first_object')
+  @name(label='第一对象')
+  first_object: &first_object(id),
 
   @persistence(name='stab')
   @name(label='认知程度')
@@ -196,5 +200,8 @@ aggregate_object<
   second: &second_object(id),
   
   @name(label='third')
-  third: &third_object(id)
+  third: &third_object(id),
+  
+  @name(label='fourth_objects')
+  fourth_objects: &fourth_object(first_object)[]
 >

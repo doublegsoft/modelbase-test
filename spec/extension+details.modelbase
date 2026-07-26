@@ -77,7 +77,6 @@ positive_review<
 
 @name(label='在线用户', plural='online_users')
 @extension(master='article', details='article_engagement;positive_review(reference_id)')
-@composite
 article_extension<
 
   token: string,

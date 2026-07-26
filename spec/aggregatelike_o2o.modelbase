@@ -124,7 +124,7 @@ fourth_object<
 
   @persistence(name='cogncepid')
   @name(label='标识')
-  id!!: long,
+  first_object!!: &first_object(id),
 
   @persistence(name='cogncepnm')
   @name(label='名称')
@@ -175,6 +175,10 @@ fifth_object<
   @persistence(name='abstlvl')
   @name(label='抽象层度')
   abstraction_level!: enum[LW:技术实现,MD:系统模式,HG:方法认知],
+  
+  @persistence(name='cogncepid')
+  @name(label='标识')
+  first_object: &first_object(id),
 
   @persistence(name='crttm')
   @name(label='创建时间')
@@ -196,5 +200,11 @@ aggregate_object<
   second: &second_object(id),
   
   @name(label='third')
-  third: &third_object(id)
+  third: &third_object(id),
+  
+  @name(label='fourth')
+  fourth: &fourth_object(first_object),
+  
+  @name(label='fifthobjs')
+  fifth_objects: &fifth_object(first_object)[]
 >

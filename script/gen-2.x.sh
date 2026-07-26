@@ -1,5 +1,8 @@
 script/java/2.x/gen-plainlike.sh
 script/java/2.x/gen-aggregatelike.sh
+script/java/2.x/gen-aggregatelike_reverse.sh
+script/java/2.x/gen-aggregatelike_o2o.sh
+script/java/2.x/gen-aggregatelike_ref_aggregatelike.sh
 script/java/2.x/gen-extension-details.sh
 script/java/2.x/gen-extension-master.sh
 script/java/2.x/gen-graph.sh
@@ -9,3 +12,10 @@ script/java/2.x/gen-meta_full.sh
 script/java/2.x/gen-pivot.sh
 script/java/2.x/gen-simple_.sh
 script/java/2.x/gen-o2o.sh
+script/java/2.x/gen-o2m_.sh
+script/java/2.x/gen-o2mp.sh
+script/java/2.x/gen-o2mo.sh
+script/java/2.x/gen-o2ma.sh
+script/java/2.x/gen-ifelse.sh
+script/java/2.x/gen-canvas.sh
+script/java/2.x/gen-match_aggregatelike.sh

@@ -1,0 +1,73 @@
+@entity
+@persistence(name='layout_element')
+@name(label='布局元素', plural='layout_elements')
+layout_element<
+
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='el_type')
+  @name(label='元素类型')
+  type!: string(50),
+
+  @persistence(name='pos_x')
+  @name(label='X坐标')
+  x!: long,
+
+  @persistence(name='pos_y')
+  @name(label='Y坐标')
+  y!: long,
+
+  @persistence(name='width')
+  @name(label='宽度')
+  w!: long,
+
+  @persistence(name='height')
+  @name(label='高度')
+  h!: long,
+
+  @persistence(name='pos_z')
+  @name(label='层级')
+  z: long,
+
+  @persistence(name='is_locked')
+  @name(label='是否锁定')
+  locked: boolean,
+
+  @persistence(name='fill_color')
+  @name(label='填充颜色')
+  fill: string(50),
+
+  @persistence(name='text_color')
+  @name(label='文本颜色')
+  color: string(50),
+
+  @persistence(name='font_size')
+  @name(label='字体大小')
+  font_size: long,
+
+  @persistence(name='font_family')
+  @name(label='字体系列')
+  font_family: string(100),
+
+  @persistence(name='content_text')
+  @name(label='文本内容')
+  content: string(4000),
+
+  @persistence(name='is_bold')
+  @name(label='是否加粗')
+  bold: enum[Y:是,N:否],
+
+  @persistence(name='text_align')
+  @name(label='对齐方式')
+  align: string(50),
+
+  @persistence(name='has_border')
+  @name(label='是否有边框')
+  border: int,
+
+  @persistence(name='border_color')
+  @name(label='边框颜色')
+  border_color: string(50)
+>

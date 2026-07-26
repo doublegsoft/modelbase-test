@@ -1,0 +1,107 @@
+
+@module(name='rule_engine')
+
+// ==========================================
+// 1. 规则集定义表 (Rule Flow)
+// 物理表名缩写: rulflw
+// ==========================================
+@persistence(name='rulflw')
+@name(label='规则流程', singular='rule_flow', plural='rule_flows')
+@entity
+rule_flow <
+  @persistence(name='id') id!!: long,
+  
+  @persistence(name='flwnm')
+  @name(label='流程名称')
+  flow_name!: string(100),
+
+  @persistence(name='isactv')
+  @name(label='是否激活')
+  is_active: enum[Y:YES,N:NO],
+
+  // 一对多：包含的分支节点
+  @name(label='决策节点列表')
+  nodes: &rule_node(flow)[]
+>
+
+// ==========================================
+// 2. 规则节点表 (Rule Node - IF/ELSE逻辑)
+// 物理表名缩写: rulnod
+// ==========================================
+@persistence(name='rulnod')
+@name(label='规则节点', singular='rule_node', plural='rule_nodes')
+@entity
+rule_node <
+  @persistence(name='id') id!!: long,
+
+  @persistence(name='flwid')
+  @name(label='关联流程')
+  flow: &rule_flow(id),
+
+  @persistence(name='nodtyp')
+  @name(label='分支类型')
+  node_type: enum[IF:起始, ELSEIF:中间, ELSE:兜底],
+
+  @persistence(name='srtord')
+  @name(label='执行顺序')
+  sort_order: integer,
+
+  // --- 命中分支后的决策输出 ---
+  @persistence(name='acttyp')
+  @name(label='动作类型')
+  action_type: enum[PRCNT:百分比费率, FIXED:固定金额, REJECT:拒绝],
+
+  @persistence(name='actval')
+  @name(label='动作值')
+  action_value: number(15, 4),
+
+  // 一对多：条件组 (组之间是 OR 关系)
+  @name(label='条件组列表')
+  condition_groups: &rule_condition_group(node)[]
+>
+
+// ==========================================
+// 3. 条件组表 (Condition Group - OR 关系)
+// 物理表名缩写: rulcgrp (Rule Condition Group)
+// ==========================================
+@persistence(name='rulcgrp')
+@name(label='条件组', singular='rule_condition_group', plural='rule_condition_groups')
+@value
+rule_condition_group <
+  @persistence(name='id') id!!: long,
+
+  @persistence(name='nodid')
+  @name(label='关联节点')
+  node: &rule_node(id),
+
+  // 一对多：具体项 (组内是 AND 关系)
+  @name(label='条件条目列表')
+  condition_items: &rule_condition_item(group)[]
+>
+
+// ==========================================
+// 4. 具体条件项表 (Condition Item - AND 关系)
+// 物理表名缩写: rulcitm (Rule Condition Item)
+// ==========================================
+@persistence(name='rulcitm')
+@name(label='条件条目', singular='rule_condition_item', plural='rule_condition_items')
+@value
+rule_condition_item <
+  @persistence(name='id') id!!: long,
+
+  @persistence(name='grpid')
+  @name(label='关联条件组')
+  group: &rule_condition_group(id),
+
+  @persistence(name='fldnm')
+  @name(label='判定变量名')
+  field_name: string(50), // 例如: tx_amount
+
+  @persistence(name='op')
+  @name(label='操作符')
+  operator: enum[EQ:EQUAL('等于'), NE:NOT_EQUAL('不等于'), GT:GREATER_THAN('大于'), LT:LESS_THAN('小于'), IN:IN('包含'), BTWN:BETWEEN('区间')],
+
+  @persistence(name='thrshval')
+  @name(label='判定阈值')
+  threshold_value: string(500)
+>
