@@ -50,7 +50,7 @@ canvas_element <
   @persistence(name='sclx') @name(label='横向缩放') scale_x: number(5, 2),
   @persistence(name='scly') @name(label='纵向缩放') scale_y: number(5, 2),
 
-  @persistence(name='opct') @name(label='透明度') opacity: number(3, 2),
+  @persistence(name='opct') @name(label='透明度') opacity: number(5, 2),
 
   // 一对多：特定类型的业务属性
   @name(label='元素属性元数据')

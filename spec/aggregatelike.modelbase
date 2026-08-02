@@ -9,11 +9,11 @@ first_object<
 
   @persistence(name='cognasstnm')
   @name(label='名称')
-  name!: string(200),
+  name: string(200),
 
   @persistence(name='cognassttyp')
   @name(label='类型')
-  type!: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接],
+  type: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接],
 
   @persistence(name='tit')
   title: string(500),
@@ -70,7 +70,7 @@ second_object<
 
   @persistence(name='cogntgnm')
   @name(label='名称')
-  name!: string(200),
+  name: string(200),
 
   @persistence(name='descr')
   description: string(1000),
@@ -90,11 +90,11 @@ third_object<
 
   @persistence(name='cognentnm')
   @name(label='名称')
-  name!: string(200),
+  name: string(200),
 
   @persistence(name='enttyp')
   @name(label='类型')
-  type!: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
+  type: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
 
   @persistence(name='tit')
   @name(label='标题')
@@ -128,11 +128,11 @@ fourth_object<
 
   @persistence(name='cogncepnm')
   @name(label='名称')
-  name!: string(200),
+  name: string(200),
 
   @persistence(name='tit')
   @name(label='标题')
-  title!: string(500),
+  title: string(500),
 
   @persistence(name='defn')
   @name(label='定义')

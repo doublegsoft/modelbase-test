@@ -13,7 +13,7 @@ first_object<
 
   @persistence(name='cognassttyp')
   @name(label='类型')
-  type!: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接],
+  type: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接],
 
   @persistence(name='tit')
   title: string(500),
@@ -94,7 +94,7 @@ third_object<
 
   @persistence(name='enttyp')
   @name(label='类型')
-  type!: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
+  type: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
 
   @persistence(name='tit')
   @name(label='标题')
@@ -132,7 +132,7 @@ fourth_object<
 
   @persistence(name='tit')
   @name(label='标题')
-  title!: string(500),
+  title: string(500),
   
   @persistence(name='throbj')
   @name(label='名称')
@@ -144,7 +144,7 @@ fourth_object<
 
   @persistence(name='stab')
   @name(label='认知程度')
-  stability!: enum[LW:个人理解,MD:工程共识,HG:长期认知],
+  stability: enum[LW:个人理解,MD:工程共识,HG:长期认知],
 
   @persistence(name='crttm')
   @name(label='创建时间')
@@ -170,7 +170,7 @@ fifth_object<
 
   @persistence(name='tit')
   @name(label='标题')
-  title!: string(500),
+  title: string(500),
 
   @persistence(name='smry')
   @name(label='概要')
@@ -178,7 +178,7 @@ fifth_object<
 
   @persistence(name='abstlvl')
   @name(label='抽象层度')
-  abstraction_level!: enum[LW:技术实现,MD:系统模式,HG:方法认知],
+  abstraction_level: enum[LW:技术实现,MD:系统模式,HG:方法认知],
 
   @persistence(name='crttm')
   @name(label='创建时间')
