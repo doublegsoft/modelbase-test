@@ -1,0 +1,85 @@
+@entity
+@persistence(name='tn_cca_category')
+@name(label='分类', plural='categories')
+category<
+  @persistence(name='catid')
+  @name(label='分类标识')
+  id!!: long,
+
+  @persistence(name='catnm')
+  @name(label='分类名称')
+  name!: string(100)
+>
+
+@entity
+@persistence(name='tn_cca_tree_node')
+@name(label='树节点', plural='tree_nodes')
+tree_node<
+
+  @persistence(name='nodeid')
+  @name(label='节点标识')
+  id!!: long,
+
+  @persistence(name='nodenm')
+  @name(label='节点名称')
+  name!: string(200),
+
+  @persistence(name='nodetyp')
+  @name(label='节点类型')
+  type: enum[RT:根节点,BR:分支节点,LF:叶子节点],
+
+  @persistence(name='pid')
+  @name(label='父节点')
+  parent: &tree_node(id),
+
+  @persistence(name='catid')
+  @name(label='所属分类')
+  category: &category(id),
+
+  @persistence(name='sortnum')
+  @name(label='排序值')
+  sort_number: int,
+
+  @persistence(name='descr')
+  @name(label='描述')
+  description: string(1000),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@name(label='树节点平铺对象', plural='plain_tree_nodes')
+@composite
+plain_tree_node<
+
+  // 当前节点信息
+  @name(label='节点标识')
+  @original(object='tree_node', attribute='id')
+  node_id: long,
+
+  @name(label='节点名称')
+  @original(object='tree_node', attribute='name')
+  node_name: string(200),
+
+  @name(label='节点类型')
+  @original(object='tree_node', attribute='type')
+  node_type: string(50),
+
+  // 引用对象平铺信息
+  @name(label='分类标识')
+  @original(object='category', attribute='id')
+  category_id: long,
+
+  @name(label='分类名称')
+  @original(object='category', attribute='name')
+  category_name: string(100),
+
+  @name(label='描述')
+  @original(object='tree_node', attribute='description')
+  description: string(1000)
+>

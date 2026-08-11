@@ -1,0 +1,288 @@
+@persistence(name='metable_object')
+@name(label='可元型扩展的对象', plural='metable_objects')
+@generated
+metable_object<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: long,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string,
+  
+  @persistence(name='category')
+  @name(label='类别')
+  first_object: &first_object(id),
+  
+  @persistence(name='type')
+  @name(label='类型')
+  type: enum[0:好的,1:非常好的,2:最好的],
+  
+  @persistence(name='state')
+  @name(label='名称')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='modid', text='修改者标识')
+  @reference(value='id', name='modifier')
+  modifier_id: string(64),
+
+  @persistence(name='modtyp', text='修改者类型')
+  @reference(value='type', name='modifier')
+  modifier_type: string(64),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@persistence(name='metable_object_meta')
+@name(label='可元型扩展的对象的扩展属性', plural='metable_object_metas')
+metable_object_meta<
+  
+  @persistence(name='metable_object_id')
+  @name(label='标识')
+  metable_object!!: &metable_object(id),
+  
+  @persistence(name='propname')
+  @name(label='属性名称')
+  property_name!!: string(100),
+  
+  @persistence(name='propval')
+  @name(label='属性值')
+  property_value: string(100)
+>
+
+@name(label='元型扩展的对象', plural='metable_objects')
+@meta(master='metable_object', detail='metable_object_meta')
+metable_object_<
+  
+  @name(label='属性A')
+  meta_prop_a: string,
+  
+  @name(label='属性B')
+  meta_prop_b: date,
+  
+  @name(label='属性C')
+  meta_prop_c: enum[C0:C0, C1:C1, C2:C2]
+  
+>
+
+
+@entity
+@persistence(name='tn_cca_cognasst')
+@name(label='资产', plural='first_objects')
+first_object<
+
+  @persistence(name='cognasstid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cognasstnm')
+  @name(label='名称')
+  name: string(200),
+
+  @persistence(name='cognassttyp')
+  @name(label='类型')
+  type: enum[FL:文件,VD:视频,IM:图片,CD:代码,DC:文档,LN:链接],
+
+  @persistence(name='tit')
+  title: string(500),
+
+  @persistence(name='loc')
+  @name(label='文件地址')
+  location: string(1000),
+
+  @persistence(name='descr')
+  @name(label='描述')
+  description: string(2000),
+
+  @persistence(name='hs')
+  @name(label='checksum')
+  hash: string(128),
+
+  @persistence(name='sz')
+  @name(label='文件大小')
+  size: long,
+
+  @persistence(name='mime')
+  @name(label='媒体类型')
+  mime: string(200),
+
+  @persistence(name='dur')
+  @name(label='时长')
+  duration: long,
+  
+  @persistence(name='second_object')
+  @name(label='第二对象')
+  second_object: &second_object(id),
+  
+  @persistence(name='third_object')
+  @name(label='第三对象')
+  third_object: &third_object(id),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@entity
+@persistence(name='tn_cogntg')
+@name(label='标签', plural='second_objects')
+second_object<
+
+  @persistence(name='cogntgid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cogntgnm')
+  @name(label='名称')
+  name: string(200),
+
+  @persistence(name='descr')
+  description: string(1000),
+
+  @persistence(name='crttm')
+  created_time = now: datetime
+>
+
+@entity
+@persistence(name='tn_cca_cognent')
+@name(label='知识入口', plural='third_objects')
+third_object<
+
+  @persistence(name='cognentid')
+  @name(label='标识')
+  id!!: long,
+
+  @persistence(name='cognentnm')
+  @name(label='名称')
+  name: string(200),
+
+  @persistence(name='enttyp')
+  @name(label='类型')
+  type: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
+
+  @persistence(name='tit')
+  @name(label='标题')
+  title: string(500),
+
+  @persistence(name='descr')
+  @name(label='描述')
+  description: string(2000),
+
+  @persistence(name='sts')
+  @name(label='状态')
+  status: enum[AC:活跃,AR:存档],
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@entity
+@persistence(name='tn_cca_cogncep')
+@name(label='概念', plural='fourth_objects')
+fourth_object<
+
+  @persistence(name='cogncepid')
+  @name(label='标识')
+  first_object!!: &first_object(id),
+
+  @persistence(name='cogncepnm')
+  @name(label='名称')
+  name: string(200),
+
+  @persistence(name='tit')
+  @name(label='标题')
+  title: string(500),
+
+  @persistence(name='defn')
+  @name(label='定义')
+  definition: string(3000),
+
+  @persistence(name='stab')
+  @name(label='认知程度')
+  stability: enum[LW:个人理解,MD:工程共识,HG:长期认知],
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@entity
+@persistence(name='tn_cca_cogntop')
+@name(label='主题', plural='fifth_objects')
+fifth_object<
+
+  @persistence(name='cogntopid')
+  @name(label='主题标识')
+  id!!: long,
+
+  @persistence(name='cogntopnm')
+  @name(label='主题名称')
+  name: string(200),
+
+  @persistence(name='tit')
+  @name(label='标题')
+  title: string(500),
+
+  @persistence(name='smry')
+  @name(label='概要')
+  summary: string(3000),
+
+  @persistence(name='abstlvl')
+  @name(label='抽象层度')
+  abstraction_level: enum[LW:技术实现,MD:系统模式,HG:方法认知],
+  
+  @persistence(name='cogncepid')
+  @name(label='标识')
+  first_object: &first_object(id),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@name(label='聚合对象', plural='aggregate_objects')
+@aggregate
+aggregate_object<
+
+  @name(label='metable')
+  metable: &metable_object(id),
+
+  @name(label='first')
+  first: &first_object(id),
+
+  @name(label='second')
+  second: &second_object(id),
+  
+  @name(label='third')
+  third: &third_object(id),
+  
+  @name(label='fourth')
+  fourth: &fourth_object(first_object),
+  
+  @name(label='fifthobjs')
+  fifth_objects: &fifth_object(first_object)[]
+>

@@ -1,5 +1,8 @@
 script/java/2.x/gen-plainlike.sh
+script/java/2.x/gen-treelike.sh
+script/java/2.x/gen-treelike_without_parent.sh
 script/java/2.x/gen-aggregatelike.sh
+script/java/2.x/gen-aggregatelike_meta.sh
 script/java/2.x/gen-aggregatelike_reverse.sh
 script/java/2.x/gen-aggregatelike_o2o.sh
 script/java/2.x/gen-aggregatelike_ref_aggregatelike.sh
