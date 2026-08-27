@@ -1,0 +1,323 @@
+@entity
+@persistence(name='dw_dim_customer')
+@name(label='客户维度', plural='dim_customers')
+dim_customer<
+
+  @persistence(name='customer_key')
+  @name(label='客户代理键')
+  customer_key!!: long,
+
+  @persistence(name='acct_id')
+  @name(label='账户源系统标识')
+  acct_id!: string(10),
+
+  @persistence(name='per_id')
+  @name(label='客户源系统标识')
+  per_id!: string(10),
+
+  @persistence(name='customer_name')
+  @name(label='客户姓名')
+  customer_name: string(250),
+
+  @persistence(name='customer_type')
+  @name(label='客户类型')
+  customer_type: enum[RE:居民,CO:商业,IN:工业],
+
+  @persistence(name='cis_division')
+  @name(label='核心分区')
+  cis_division: string(10),
+
+  @persistence(name='bill_cycle')
+  @name(label='账单周期')
+  bill_cycle: string(10),
+
+  @persistence(name='start_dt')
+  @name(label='行有效开始时间')
+  start_date: datetime,
+
+  @persistence(name='end_dt')
+  @name(label='行有效结束时间')
+  end_date: datetime,
+
+  @persistence(name='is_current')
+  @name(label='是否当前最新行')
+  is_current: enum[Y:是,N:否]
+>
+
+@entity
+@persistence(name='dw_dim_premise')
+@name(label='场所与服务点维度', plural='dim_premises')
+dim_premise<
+
+  @persistence(name='premise_key')
+  @name(label='场所代理键')
+  premise_key!!: long,
+
+  @persistence(name='prem_id')
+  @name(label='场所源系统标识')
+  prem_id!: string(10),
+
+  @persistence(name='sp_id')
+  @name(label='服务点源系统标识')
+  sp_id!: string(10),
+
+  @persistence(name='service_type')
+  @name(label='服务类别')
+  service_type: enum[EL:电力,GS:燃气,WT:水务],
+
+  @persistence(name='sp_type')
+  @name(label='服务点细分类型')
+  sp_type: string(30),
+
+  @persistence(name='address1')
+  @name(label='地址')
+  address1: string(100),
+
+  @persistence(name='city')
+  @name(label='城市')
+  city: string(50),
+
+  @persistence(name='state')
+  @name(label='省份')
+  state: string(10),
+
+  @persistence(name='postal_code')
+  @name(label='邮政编码')
+  postal_code: string(15),
+
+  @persistence(name='climate_zone')
+  @name(label='气候分区')
+  climate_zone: string(20)
+>
+
+@entity
+@persistence(name='dw_dim_service_agmt')
+@name(label='服务合约维度', plural='dim_service_agmts')
+dim_service_agmt<
+
+  @persistence(name='sa_key')
+  @name(label='合约代理键')
+  sa_key!!: long,
+
+  @persistence(name='sa_id')
+  @name(label='合约源系统标识')
+  sa_id!: string(10),
+
+  @persistence(name='sa_type')
+  @name(label='合约类型')
+  sa_type: string(30),
+
+  @persistence(name='sa_status')
+  @name(label='合约状态')
+  sa_status: string(20),
+
+  @persistence(name='start_dt')
+  @name(label='生效日期')
+  start_date: datetime,
+
+  @persistence(name='end_dt')
+  @name(label='失效日期')
+  end_date: datetime
+>
+
+@entity
+@persistence(name='dw_dim_rate')
+@name(label='费率维度', plural='dim_rates')
+dim_rate<
+
+  @persistence(name='rate_key')
+  @name(label='费率代理键')
+  rate_key!!: long,
+
+  @persistence(name='rate_schedule')
+  @name(label='费率代码')
+  rate_schedule!: string(12),
+
+  @persistence(name='rate_desc')
+  @name(label='费率描述')
+  rate_description: string(100),
+
+  @persistence(name='season_cd')
+  @name(label='执行季节')
+  season_code: enum[SM:夏季,WT:冬季,SP:春季,AU:秋季]
+>
+
+@entity
+@persistence(name='dw_dim_date')
+@name(label='时间维度', plural='dim_dates')
+dim_date<
+
+  @persistence(name='date_key')
+  @name(label='时间代理键')
+  date_key!!: long,
+
+  @persistence(name='calendar_date')
+  @name(label='公历日期')
+  calendar_date!: datetime,
+
+  @persistence(name='day_of_week')
+  @name(label='星期几')
+  day_of_week: long,
+
+  @persistence(name='month_num')
+  @name(label='月份数字')
+  month_number: long,
+
+  @persistence(name='month_nm')
+  @name(label='月份名称')
+  month_name: string(15),
+
+  @persistence(name='quarter')
+  @name(label='季度')
+  quarter: long,
+
+  @persistence(name='yr')
+  @name(label='年份')
+  year: long,
+
+  @persistence(name='is_holiday')
+  @name(label='是否节假日')
+  is_holiday: enum[Y:是,N:否]
+>
+
+@entity
+@persistence(name='dw_fact_bill_segments')
+@name(label='账单细项事实表', plural='fact_bill_segments')
+fact_bill_segment<
+
+  @persistence(name='bseg_key')
+  @name(label='账单细项事实代理键')
+  bseg_key!!: long,
+
+  @persistence(name='customer_key')
+  @name(label='关联客户')
+  customer: &dim_customer(customer_key),
+
+  @persistence(name='premise_key')
+  @name(label='关联场所')
+  premise: &dim_premise(premise_key),
+
+  @persistence(name='sa_key')
+  @name(label='关联合约')
+  service_agreement: &dim_service_agmt(sa_key),
+
+  @persistence(name='rate_key')
+  @name(label='关联费率')
+  rate: &dim_rate(rate_key),
+
+  @persistence(name='bill_date_key')
+  @name(label='结算日期')
+  bill_date: &dim_date(date_key),
+
+  @persistence(name='service_start_key')
+  @name(label='计费开始日期')
+  service_start_date: &dim_date(date_key),
+
+  @persistence(name='service_end_key')
+  @name(label='计费结束日期')
+  service_end_date: &dim_date(date_key),
+
+  @persistence(name='bill_id')
+  @name(label='源系统账单主键')
+  bill_id: string(10),
+
+  @persistence(name='bseg_id')
+  @name(label='源系统账单段主键')
+  bseg_id: string(10),
+
+  @persistence(name='billed_amt')
+  @name(label='计费金额')
+  billed_amount: long,
+
+  @persistence(name='consumption_qty')
+  @name(label='计费量值')
+  consumption_quantity: long,
+
+  @persistence(name='billed_dys')
+  @name(label='计费天数')
+  billed_days: long,
+
+  @persistence(name='avg_daily_amt')
+  @name(label='日均消费金额')
+  average_daily_amount: long,
+
+  @persistence(name='avg_daily_cons')
+  @name(label='日均用量')
+  average_daily_consumption: long
+>
+
+@name(label='用电营收多维分析视图', plural='revenue_analysis_views')
+@composite
+revenue_analysis_view<
+
+  @name(label='客户姓名')
+  @original(object='dim_customer', attribute='customer_name')
+  customer_name: string(250),
+
+  @name(label='城市')
+  @original(object='dim_premise', attribute='city')
+  city: string(50),
+
+  @name(label='服务类型')
+  @original(object='dim_premise', attribute='service_type')
+  service_type: string(20),
+
+  @name(label='结算金额')
+  @original(object='fact_bill_segment', attribute='billed_amount')
+  billed_amount: long,
+
+  @name(label='用电量')
+  @original(object='fact_bill_segment', attribute='consumption_quantity')
+  consumption_quantity: long,
+
+  @name(label='年份')
+  @original(object='dim_date', attribute='year')
+  year: long
+>
+
+@entity
+@persistence(name='dw_fact_financial_transactions')
+@name(label='金融交易事务事实表', plural='fact_financial_transactions')
+fact_financial_transaction<
+
+  @persistence(name='ft_key')
+  @name(label='金融交易事实代理键')
+  ft_key!!: long,
+
+  @persistence(name='customer_key')
+  @name(label='关联客户')
+  customer: &dim_customer(customer_key),
+
+  @persistence(name='sa_key')
+  @name(label='关联合约')
+  service_agreement: &dim_service_agmt(sa_key),
+
+  @persistence(name='post_date_key')
+  @name(label='过账日期')
+  post_date: &dim_date(date_key),
+
+  @persistence(name='bseg_key')
+  @name(label='关联账单细项事实') -- 如果该交易是由账单产生的，可为空
+  bill_segment: &fact_bill_segment(bseg_key),
+
+  @persistence(name='ft_id')
+  @name(label='源系统交易唯一标识')
+  ft_id: string(10),
+
+  @persistence(name='ft_type_flg')
+  @name(label='交易事务类型')
+  type: enum[BS:账单产生,PX:客户付款,AD:账务调整,WD:坏账销账],
+
+  @persistence(name='gl_acct')
+  @name(label='总账科目代码')
+  gl_account!: string(30),
+
+  -- 数值度量
+  @persistence(name='cur_amt')
+  @name(label='当前发生金额') -- 影响用户账户余额的金额 (借/贷)
+  current_amount: long,
+
+  @persistence(name='gl_amt')
+  @name(label='总账记账金额') -- 记入财务总账的金额
+  gl_amount: long
+>

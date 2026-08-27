@@ -1,0 +1,278 @@
+@entity
+@persistence(name='ci_per')
+@name(label='客户个人信息', plural='people')
+person<
+
+  @persistence(name='per_id')
+  @name(label='客户标识')
+  id!!: long,
+
+  @persistence(name='first_nm')
+  @name(label='名')
+  first_name: string(50),
+
+  @persistence(name='last_nm')
+  @name(label='姓')
+  last_name: string(50),
+
+  @persistence(name='entity_nm')
+  @name(label='完整名称')
+  entity_name!: string(254),
+
+  @persistence(name='phone')
+  @name(label='电话')
+  phone: string(30),
+
+  @persistence(name='email_id')
+  @name(label='邮箱')
+  email: string(100),
+
+  @persistence(name='per_typ_flg')
+  @name(label='客户类型')
+  type: enum[P:个人,B:企业],
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime
+>
+
+@entity
+@persistence(name='ci_acct')
+@name(label='账户信息', plural='accounts')
+account<
+
+  @persistence(name='acct_id')
+  @name(label='账户标识')
+  id!!: long,
+  
+  @persistence(name='pers_id')
+  @name(label='账单周期')
+  person!: &person(id),
+
+  @persistence(name='bill_cyc_cd')
+  @name(label='账单周期')
+  bill_cycle_code!: string(4),
+
+  @persistence(name='cis_division')
+  @name(label='核心分区')
+  cis_division!: string(5),
+
+  @persistence(name='acct_status_flg')
+  @name(label='账户状态')
+  status: enum[A:活跃,I:非活跃]
+>
+
+@entity
+@persistence(name='ci_prem')
+@name(label='用电地址/用电场所', plural='premises')
+premise<
+
+  @persistence(name='prem_id')
+  @name(label='场所标识')
+  id!!: long,
+
+  @persistence(name='address1')
+  @name(label='主地址')
+  address1!: string(64),
+
+  @persistence(name='address2')
+  @name(label='次要地址')
+  address2: string(64),
+
+  @persistence(name='city')
+  @name(label='城市')
+  city!: string(30),
+
+  @persistence(name='state')
+  @name(label='省份/州')
+  state!: string(2),
+
+  @persistence(name='postal')
+  @name(label='邮政编码')
+  postal!: string(10)
+>
+
+@entity
+@persistence(name='ci_sp')
+@name(label='服务点', plural='service_points')
+service_point<
+
+  @persistence(name='sp_id')
+  @name(label='服务点标识')
+  id!!: long,
+
+  @persistence(name='prem_id')
+  @name(label='所属场所')
+  premise: &premise(id),
+
+  @persistence(name='sp_type_cd')
+  @name(label='服务类型')
+  type_code!: string(8),
+
+  @persistence(name='sp_status_flg')
+  @name(label='服务状态')
+  status: enum[A:活跃,I:非活跃]
+>
+
+@entity
+@persistence(name='ci_sa')
+@name(label='服务合约', plural='service_agreements')
+service_agreement<
+
+  @persistence(name='sa_id')
+  @name(label='合约标识')
+  id!!: long,
+
+  @persistence(name='acct_id')
+  @name(label='绑定账户')
+  account: &account(id),
+
+  @persistence(name='sp_id')
+  @name(label='关联服务点')
+  service_point: &service_point(id),
+
+  @persistence(name='sa_type_cd')
+  @name(label='合约费率代码')
+  type_code!: string(8),
+
+  @persistence(name='sa_status_flg')
+  @name(label='合约状态')
+  status: enum[10:准备中,20:有效,30:已关闭],
+
+  @persistence(name='start_dt')
+  @name(label='生效时间')
+  start_date!: datetime,
+
+  @persistence(name='end_dt')
+  @name(label='截止时间')
+  end_date: datetime
+>
+
+@entity
+@persistence(name='ci_bill')
+@name(label='账单主档', plural='bills')
+bill<
+
+  @persistence(name='bill_id')
+  @name(label='账单标识')
+  id!!: long,
+
+  @persistence(name='acct_id')
+  @name(label='账户')
+  account: &account(id),
+
+  @persistence(name='bill_dt')
+  @name(label='账单日期')
+  bill_date!: datetime,
+
+  @persistence(name='due_dt')
+  @name(label='到期日期')
+  due_date!: datetime,
+
+  @persistence(name='bill_status_flg')
+  @name(label='账单状态')
+  status: enum[P:处理中,C:完成,F:冻结]
+>
+
+@entity
+@persistence(name='ci_bill_seg')
+@name(label='账单细项段', plural='bill_segments')
+@fact
+bill_segment<
+
+  @persistence(name='bseg_id')
+  @name(label='细项标识')
+  id!!: long,
+
+  @persistence(name='bill_id')
+  @name(label='所属账单')
+  bill: &bill(id),
+
+  @persistence(name='sa_id')
+  @name(label='关联合约')
+  service_agreement: &service_agreement(id),
+
+  @persistence(name='start_dt')
+  @name(label='计费开始时间')
+  start_date!: datetime,
+
+  @persistence(name='end_dt')
+  @name(label='计费结束时间')
+  end_date!: datetime,
+
+  @persistence(name='bseg_status_flg')
+  @name(label='细项状态')
+  status: enum[P:准备中,F:冻结,C:已取消]
+>
+
+@entity
+@persistence(name='ci_ft')
+@name(label='金融交易事务', plural='financial_transactions')
+@fact
+financial_transaction<
+
+  @persistence(name='ft_id')
+  @name(label='交易标识')
+  id!!: long,
+
+  @persistence(name='bill_id')
+  @name(label='关联账单细项')
+  bill: &bill(id),
+  
+  @persistence(name='acct_id')
+  @name(label='付款账户')
+  account: &account(id),
+  
+  @persistence(name='sa_id')
+  @name(label='服务项')
+  service_agreement: &service_agreement(id),
+
+  @persistence(name='ft_type_flg')
+  @name(label='交易类别')
+  type: enum[BS:账单段,PX:付款,AD:调整],
+
+  @persistence(name='cur_amt')
+  @name(label='当前发生金额')
+  current_amount!: long,
+
+  @persistence(name='gl_amt')
+  @name(label='记账金额')
+  gl_amount!: long,
+
+  @persistence(name='gl_acct')
+  @name(label='总账科目')
+  gl_account!: string(30),
+
+  @persistence(name='post_dt')
+  @name(label='入账时间')
+  post_date!: datetime
+>
+
+@name(label='客户账务概要视图', plural='billing_summary_views')
+@composite
+billing_summary_view<
+
+  @name(label='客户标识')
+  @original(object='person', attribute='id')
+  person_id: string(10),
+
+  @name(label='客户名称')
+  @original(object='person', attribute='entity_name')
+  customer_name: string(254),
+
+  @name(label='账户标识')
+  @original(object='account', attribute='id')
+  account_id: string(10),
+
+  @name(label='合约标识')
+  @original(object='service_agreement', attribute='id')
+  sa_id: string(10),
+
+  @name(label='用电地址')
+  @original(object='premise', attribute='address1')
+  address: string(64),
+
+  @name(label='城市')
+  @original(object='premise', attribute='city')
+  city: string(30)
+>

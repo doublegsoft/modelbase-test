@@ -5,20 +5,17 @@ export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbas
 export OUTPUT_ROOT=out
 
 export SPEC=o2o
-export APPNAME=o2o2
+export APPNAME=o2o
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
-export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x
+export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
 ################################################################################
 ##                                                                            ##
 ##                                     JAVA                                   ##
 ##                                                                            ##
 ################################################################################
-REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" \
-  "java-dto@gfc-2.x" "java-dtokit@gfc-1.x" \
-  "java-orm@mybatis-1.x" "java-orm@rdbms-1.x" \
-  "java-test@postman-1.x" "java-mvc@spring-2.x" \
-  "java-tx@gfc-1.x" "java-tx@jakarta-2.x")
+REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" "java-dto@gfc-1.x" "java-dtokit@gfc-1.x" "java-orm@mybatis-1.x" \
+"java-orm@rdbms-1.x" "java-tx@spring-1.x" "java-mvc@spring-1.x" "java-test@postman-1.x")
 
 for repo in "${REPOS[@]}"
 do
