@@ -1,0 +1,59 @@
+@protocol
+@name(label='IPv4')
+ipv4<
+
+  version: bit(4),
+  
+  ihl: bit(4),
+  
+  tos: bit(8),
+  
+  total_length: bit(16),
+  
+  flags: bit(4),
+  
+  fragment_offset: bit(16),
+  
+  ttl: bit(8),
+  
+  protocol: bit(8),
+  
+  checksum: bit(16),
+  
+  source_ip_address: bit(32),
+  
+  desination_ip_address: bit(32),
+  
+  options: bit(32)
+
+>
+
+@protocol
+@name(label='业务')
+text_message<
+
+  magic=1234: byte(4),
+  
+  sender: string(16),
+  
+  message_len: int,
+  
+  message: string(message_len),
+  
+  attachment_count: int,
+  
+  attachments: &attachment[attachment_count]
+>
+
+@name(label='附件')
+attachment<
+
+  length: int,
+  
+  title: string(length),
+
+  size: int,
+  
+  data: byte(size)
+
+>

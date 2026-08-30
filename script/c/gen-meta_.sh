@@ -15,7 +15,8 @@ export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
 ##                                      C                                     ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x" "c-sql@std-1.x")
+REPOS=("c-poco@std-1.x" "c-dto@query-1.x" "c-sql@std-1.x" "c-db@sqlite-1.x" \
+       "../sql/sql-ddl@sqlite-1.x")
 
 for repo in "${REPOS[@]}"
 do
@@ -48,7 +49,7 @@ done
 ##                         COMMAND LINE INTERFACE (C)                         ##
 ##                                                                            ##
 ################################################################################
-export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@std-1.x
+export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@cmake-1.x
 
 java -jar $PROJBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -71,6 +72,15 @@ java -jar $PROJBASE_JAR \
 \[\"poco\",\"sql\"\]\
 \} 2>&1
 
+SQLITE_BUILD=$PROJECT_ROOT/3rd/sqlite-3.53.4/build/darwin
+if [[ ! -d "$SQLITE_BUILD" ]]; then
+  cd $PROJECT_ROOT/3rd/sqlite-3.53.4
+  chmod +x ./configure
+  mkdir -p "build/darwin"
+  cd build/darwin && ../../configure --enable-shared && make
+  cd ../../../..
+fi
 mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
-/usr/local/bin/cmake ../.. && make
+/opt/homebrew/bin/cmake ../.. && make
+ctest --output-on-failure
 

@@ -3,7 +3,7 @@ export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-model
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-7.0-shaded.jar
 
-export OUTPUT_ROOT=out/rust
+export OUTPUT_ROOT=out/go
 
 export SPEC=meta_
 export APPNAME=meta
@@ -12,14 +12,14 @@ export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
 ################################################################################
 ##                                                                            ##
-##                                    RUST                                    ##
+##                                     GO                                     ##
 ##                                                                            ##
 ################################################################################
-REPOS=("rust-poco@std-1.x" "rust-sql@std-1.x")
+REPOS=("go-poco@std-1.x")
 
 for repo in "${REPOS[@]}"
 do
-export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/rust/$repo
+export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/go/$repo
 
 java -jar $MODELBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -33,9 +33,9 @@ java -jar $MODELBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.rust.RustConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.rust.RustNamingConvention\",\
-\"language\":\"rust\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.go.GoConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.go.GoNamingConvention\",\
+\"language\":\"go\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
@@ -45,10 +45,10 @@ done
 
 ################################################################################
 ##                                                                            ##
-##                        COMMAND LINE INTERFACE (RUST)                       ##
+##                         COMMAND LINE INTERFACE (GO)                        ##
 ##                                                                            ##
 ################################################################################
-export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/rust/rust-lib@std-1.x
+export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/go/go-lib@std-1.x
 
 java -jar $PROJBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -62,9 +62,9 @@ java -jar $PROJBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.rust.RustConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.rust.RustNamingConvention\",\
-\"language\":\"rust\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.go.GoConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.go.GoNamingConvention\",\
+\"language\":\"go\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
@@ -73,4 +73,4 @@ java -jar $PROJBASE_JAR \
 
 
 cd $PROJECT_ROOT
-cargo test
+go test ./...
