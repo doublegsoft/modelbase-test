@@ -45,6 +45,7 @@ text_message<
   attachments: &attachment[attachment_count]
 >
 
+@protocol
 @name(label='附件')
 attachment<
 

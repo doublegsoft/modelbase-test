@@ -2,11 +2,10 @@ export MODELBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/mo
 export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-modelbase-7.0-shaded.jar
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-7.0-shaded.jar
-
 export OUTPUT_ROOT=out/java
 
-export SPEC=graph
-export APPNAME=graph2
+export SPEC=bill
+export APPNAME=bill
 export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x

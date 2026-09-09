@@ -72,6 +72,9 @@ metable_object_meta<
 
 @name(label='元型扩展的对象', plural='metable_objects')
 @meta(master='metable_object', detail='metable_object_meta')
+@xlsx
+@cache
+@message
 metable_object_<
   
   @name(label='属性A')

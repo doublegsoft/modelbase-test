@@ -3,7 +3,7 @@ export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-model
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-7.0-shaded.jar
 
-export OUTPUT_ROOT=out
+export OUTPUT_ROOT=out/java
 
 export SPEC=meta_
 export APPNAME=meta2
@@ -19,7 +19,8 @@ REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" \
   "java-dto@gfc-2.x" "java-dtokit@gfc-1.x" \
   "java-orm@mybatis-1.x" "java-orm@rdbms-1.x" \
   "java-test@postman-1.x" "java-mvc@spring-2.x" \
-  "java-tx@gfc-1.x" "java-tx@jakarta-2.x")
+  "java-tx@gfc-1.x" "java-tx@jakarta-2.x" \
+  "java-xlsx@poi-1.x" "java-cache@redis-1.x" "java-mq@kafka-1.x")
 
 for repo in "${REPOS[@]}"
 do

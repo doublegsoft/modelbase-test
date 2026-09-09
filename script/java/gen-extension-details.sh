@@ -5,7 +5,7 @@ export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbas
 export TATABASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/tatabase/03.Development/tatabase-data
 export TATABASE_JAR=/Users/christian/export/opt/tatabase/protosys-plugin-tatabase-7.0-shaded.jar
 
-export OUTPUT_ROOT=out
+export OUTPUT_ROOT=out/java
 
 export SPEC=extension+details
 export APPNAME=extensiondetails2

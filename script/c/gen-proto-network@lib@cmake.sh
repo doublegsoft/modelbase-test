@@ -9,13 +9,13 @@ export SPEC=proto-network
 export APPNAME=pnw
 export NAMESPACE=pnw
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
-export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
+export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"@lib
 ################################################################################
 ##                                                                            ##
 ##                                      C                                     ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x" "c-codec@socket-1.x")
+REPOS=("c-poco@std-1.x" "c-codec@std-1.x")
 
 for repo in "${REPOS[@]}"
 do
@@ -42,44 +42,37 @@ java -jar $MODELBASE_JAR \
 \[\]\
 \} 2>&1
 done
-#
-#################################################################################
-###                                                                            ##
-###                         COMMAND LINE INTERFACE (C)                         ##
-###                                                                            ##
-#################################################################################
-#export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@cmake-1.x
-#
-#java -jar $PROJBASE_JAR \
-#--model=$MOBELBASE_MODEL \
-#--template-root=$TEMPLATE_ROOT \
-#--output-root=$PROJECT_ROOT \
-#--license=LICENSE \
-#--globals=\
-#\{\
-#\"application\":\"$APPNAME\",\
-#\"namespace\":\"$NAMESPACE\",\
-#\"artifact\":\"$APPNAME\",\
-#\"version\":\"1.0.0\",\
-#\"description\":\"\",\
-#\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
-#\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
-#\"language\":\"c\",\
-#\"imports\":\
-#\[\],\
-#\"dependencies\":\
-#\[\"poco\",\"sql\"\]\
-#\} 2>&1
-#
-#SQLITE_BUILD=$PROJECT_ROOT/3rd/sqlite-3.53.4/build/darwin
-#if [[ ! -d "$SQLITE_BUILD" ]]; then
-#  cd $PROJECT_ROOT/3rd/sqlite-3.53.4
-#  chmod +x ./configure
-#  mkdir -p "build/darwin"
-#  cd build/darwin && ../../configure --enable-shared && make
-#  cd ../../../..
-#fi
-#mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
-#/opt/homebrew/bin/cmake ../.. && make
-#ctest --output-on-failure
+
+################################################################################
+##                                                                            ##
+##                         COMMAND LINE INTERFACE (C)                         ##
+##                                                                            ##
+################################################################################
+export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@cmake-1.x
+
+java -jar $PROJBASE_JAR \
+--model=$MOBELBASE_MODEL \
+--template-root=$TEMPLATE_ROOT \
+--output-root=$PROJECT_ROOT \
+--license=LICENSE \
+--globals=\
+\{\
+\"application\":\"$APPNAME\",\
+\"namespace\":\"$NAMESPACE\",\
+\"artifact\":\"$APPNAME\",\
+\"version\":\"1.0.0\",\
+\"description\":\"\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
+\"language\":\"c\",\
+\"imports\":\
+\[\],\
+\"dependencies\":\
+\[\"poco\",\"sql\"\]\
+\} 2>&1
+
+WD=$PWD
+mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
+/opt/homebrew/bin/cmake ../.. && make
+ctest --output-on-failure
 

@@ -9,14 +9,15 @@ export SPEC=meta_
 export APPNAME=meta
 export NAMESPACE=app
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
-export PROJECT_ROOT=$OUTPUT_ROOT/$SPEC
+export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"@lib
 ################################################################################
 ##                                                                            ##
 ##                                      C                                     ##
 ##                                                                            ##
 ################################################################################
 REPOS=("c-poco@std-1.x" "c-dto@query-1.x" "c-sql@std-1.x" "c-db@sqlite-1.x" \
-       "../sql/sql-ddl@sqlite-1.x")
+       "c-json@json-c-1.0" "c-util@std-1.0" \
+       "../json/json-test@std-1.x" "../sql/sql-ddl@sqlite-1.x")
 
 for repo in "${REPOS[@]}"
 do
@@ -72,14 +73,7 @@ java -jar $PROJBASE_JAR \
 \[\"poco\",\"sql\"\]\
 \} 2>&1
 
-SQLITE_BUILD=$PROJECT_ROOT/3rd/sqlite-3.53.4/build/darwin
-if [[ ! -d "$SQLITE_BUILD" ]]; then
-  cd $PROJECT_ROOT/3rd/sqlite-3.53.4
-  chmod +x ./configure
-  mkdir -p "build/darwin"
-  cd build/darwin && ../../configure --enable-shared && make
-  cd ../../../..
-fi
+WD=$PWD
 mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
 /opt/homebrew/bin/cmake ../.. && make
 ctest --output-on-failure

@@ -1,0 +1,328 @@
+// =============================================================================
+// 1. 客户账户实体 (Account)
+// =============================================================================
+@entity
+@persistence(name='tn_bil_acct')
+@name(label='客户账户', plural='accounts')
+account<
+
+  @persistence(name='acctid')
+  @name(label='账户标识')
+  id!!: long,
+
+  @persistence(name='acctno')
+  @name(label='账户编号')
+  account_no!: string(64),
+
+  @persistence(name='custnm')
+  @name(label='客户姓名')
+  customer_name!: string(200),
+
+  @persistence(name='accttyp')
+  @name(label='账户类型')
+  type: enum[IND:个人,CORP:企业,GOV:政府机构],
+
+  @persistence(name='biladdr')
+  @name(label='账单寄送地址')
+  billing_address: string(500),
+
+  @persistence(name='currcd')
+  @name(label='币种')
+  currency = 'HKD': string(10),
+
+  @persistence(name='sts')
+  @name(label='账户状态')
+  status!: enum[AC:正常,SP:暂停,CL:销户],
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+
+// =============================================================================
+// 2. 账单主实体 (Bill)
+// 关联 account
+// =============================================================================
+@entity
+@persistence(name='tn_bil_bill')
+@name(label='账单', plural='bills')
+bill<
+
+  @persistence(name='billid')
+  @name(label='账单标识')
+  id!!: long,
+
+  @persistence(name='billno')
+  @name(label='账单编号')
+  bill_no!: string(64),
+
+  // 关联账户
+  @persistence(name='acctid')
+  @name(label='所属账户')
+  account!: &account(id),
+
+  @persistence(name='billtyp')
+  @name(label='账单类型')
+  bill_type!: enum[01:普通账单,02:终结单,05:副本账单,06:终结副本单],
+
+  @persistence(name='prdstrt')
+  @name(label='账期开始日')
+  period_start_date: datetime,
+
+  @persistence(name='prdend')
+  @name(label='账期结束日')
+  period_end_date: datetime,
+
+  @persistence(name='issdt')
+  @name(label='发单日期')
+  issue_date: datetime,
+
+  @persistence(name='duedt')
+  @name(label='缴费截止日')
+  due_date!: datetime,
+
+  @persistence(name='totamt')
+  @name(label='应缴总额')
+  total_amount!: number(16,2),
+
+  @persistence(name='apamt')
+  @name(label='自动转账金额')
+  autopay_amount: number(16,2),
+
+  @persistence(name='balbf')
+  @name(label='承前结余')
+  balance_bf: number(16,2),
+
+  @persistence(name='balcf')
+  @name(label='滚存下期结余')
+  balance_cf: number(16,2),
+
+  @persistence(name='sts')
+  @name(label='缴费状态')
+  status!: enum[UN:未缴,PD:已缴清,PP:部分缴费,CN:作废],
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+
+// =============================================================================
+// 3. 服务/处所明细实体 (Service Detail)
+// 归属于账单与账户的从属记录（多处所）
+// =============================================================================
+@entity
+@persistence(name='tn_bil_svcdtl')
+@name(label='服务明细', plural='svc_dtls')
+svc_dtl<
+
+  @persistence(name='svcdtlid')
+  @name(label='服务明细标识')
+  id!!: long,
+
+  // 所属账单 (外键指向 bill)
+  @persistence(name='billid')
+  @name(label='所属账单')
+  bill!: &bill(id),
+
+  // 所属账户 (外键指向 account)
+  @persistence(name='acctid')
+  @name(label='所属账户')
+  account!: &account(id),
+
+  @persistence(name='prmsid')
+  @name(label='处所编号')
+  premise_id!: string(64),
+
+  @persistence(name='prmsaddr')
+  @name(label='处所地址')
+  premise_address: string(500),
+
+  @persistence(name='svctyp')
+  @name(label='供水服务性质')
+  supply_nature: string(100),
+
+  @persistence(name='mtrno')
+  @name(label='水表编号')
+  meter_no: string(64),
+
+  @persistence(name='strtrdg')
+  @name(label='起读度数')
+  start_reading: number(16,3),
+
+  @persistence(name='endrdg')
+  @name(label='止读度数')
+  end_reading: number(16,3),
+
+  @persistence(name='rdgtyp')
+  @name(label='抄表类型')
+  reading_type: enum[A:实际抄表,E:估算读数,S:自报读数],
+
+  @persistence(name='csmptn')
+  @name(label='结算用水量')
+  consumption: number(16,3),
+
+  @persistence(name='subtotamt')
+  @name(label='处所小计金额')
+  subtotal_amount: number(16,2),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+
+// =============================================================================
+// 4. 账单费用细项实体 (Bill Item)
+// 费用计费科目细项（多细项/多阶梯）
+// =============================================================================
+@entity
+@persistence(name='tn_bil_billitm')
+@name(label='账单细项', plural='bill_items')
+bill_item<
+
+  @persistence(name='billitmid')
+  @name(label='细项标识')
+  id!!: long,
+
+  // 所属账单 (外键指向 bill)
+  @persistence(name='billid')
+  @name(label='所属账单')
+  bill!: &bill(id),
+
+  // 所属服务处所 (外键指向 svc_dtl)
+  @persistence(name='svcdtlid')
+  @name(label='关联服务明细')
+  svc_dtl: &svc_dtl(id),
+
+  @persistence(name='itmcd')
+  @name(label='收费项编码')
+  item_code!: string(32),
+
+  @persistence(name='itmnm')
+  @name(label='收费项名称')
+  item_name!: string(200),
+
+  @persistence(name='trlvl')
+  @name(label='收费阶梯级别')
+  tier_level: enum[01:第一级,02:第二级,03:第三级,04:第四级,NA:不分级],
+
+  @persistence(name='uprc')
+  @name(label='单价/费率')
+  unit_price: number(16,4),
+
+  @persistence(name='qty')
+  @name(label='计费数量')
+  quantity: number(16,3),
+
+  @persistence(name='amt')
+  @name(label='细项金额')
+  amount!: number(16,2),
+
+  @persistence(name='strtdt')
+  @name(label='计费开始日')
+  start_date: datetime,
+
+  @persistence(name='enddt')
+  @name(label='计费结束日')
+  end_date: datetime,
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+
+// =============================================================================
+// 5. 账单附注信息实体 (Bill Message)
+// 提示与附注条目（多附注，仅外键关联 bill）
+// =============================================================================
+@entity
+@persistence(name='tn_bil_billmsg')
+@name(label='账单附注', plural='bill_messages')
+bill_message<
+
+  @persistence(name='billmsgid')
+  @name(label='附注标识')
+  id!!: long,
+
+  // 仅且只与 bill 建立外键关联
+  @persistence(name='billid')
+  @name(label='所属账单')
+  bill!: &bill(id),
+
+  @persistence(name='prmsid')
+  @name(label='业务处所编号')
+  premise_id: string(64),
+
+  @persistence(name='msgtyp')
+  @name(label='附注类型')
+  type!: enum[ACC:账户通用附注,PRM:处所专属附注,SYS:系统公告],
+
+  @persistence(name='msgcd')
+  @name(label='附注代码')
+  code: string(16),
+
+  @persistence(name='seq')
+  @name(label='展示排序')
+  seq_no: int,
+
+  @persistence(name='msgtxt')
+  @name(label='附注内容')
+  content!: string(2000),
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+
+// =============================================================================
+// 6. 账单全景聚合根对象 (Bill Aggregate)
+// ★ 1对1 属性保持单个引用，1对多列表属性使用集合语法 [&entity(id)]
+// =============================================================================
+@name(label='账单全景聚合', plural='bill_aggregates')
+@aggregate
+bill_aggregate<
+
+  // 1:1 关联主单
+  @name(label='账单主体')
+  bill: &bill(id),
+
+  // 1:1 关联归属账户
+  @name(label='所属账户')
+  account: &account(id),
+
+  // 1:N 处所/设备明细列表
+  @name(label='服务处所明细列表')
+  svc_dtls: &svc_dtl(id)[],
+
+  // 1:N 计费细项列表
+  @name(label='费用细项列表')
+  bill_items: &bill_item(id)[],
+
+  // 1:N 附注提示列表
+  @name(label='账单附注列表')
+  bill_messages: &bill_message(id)[]
+>
