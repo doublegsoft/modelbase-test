@@ -1,0 +1,57 @@
+@module(name='simple')
+@params(name='hello_world',prompt='')
+hello_world_params<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='status')
+  @name(label='状态')
+  status: string(100),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='state')
+  @name(label='系统状态状态')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>
+
+@module(name='simple')
+@result(name='hello_world')
+hello_world_result<
+  
+  @persistence(name='id')
+  @name(label='标识')
+  id!!: id,
+  
+  @persistence(name='name')
+  @name(label='名称')
+  name: string(100),
+  
+  @persistence(name='status')
+  @name(label='状态')
+  status: string(100),
+  
+  @persistence(name='created_time')
+  @name(label='创建时间')
+  created_time = now: datetime,
+  
+  @persistence(name='state')
+  @name(label='系统状态状态')
+  state: enum[E:有效,D:失效],
+  
+  @persistence(name='last_modified_time')
+  @name(label='最后更新时间')
+  last_modified_time: now
+>

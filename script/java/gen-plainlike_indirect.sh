@@ -3,23 +3,27 @@ export MODELBASE_JAR=/Users/christian/export/opt/modelbase/protosys-plugin-model
 export PROJBASE_DATA_ROOT=/Users/christian/export/local/works/doublegsoft.io/projbase/03.Development/projbase-data
 export PROJBASE_JAR=/Users/christian/export/opt/projbase/protosys-plugin-projbase-7.0-shaded.jar
 
-export OUTPUT_ROOT=out/c
+export OUTPUT_ROOT=out/java
 
-export SPEC=proto-network
-export APPNAME=pnw
-export NAMESPACE=pnw
+export SPEC=plainlike-indirect
+export APPNAME=plainlikeindirect
+export NAMESPACE=biz.doublegsoft
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
-export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"@lib
+export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"-2.x
 ################################################################################
 ##                                                                            ##
-##                                      C                                     ##
+##                                     JAVA                                   ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x" "c-codec@std-1.x")
+REPOS=("java-poco@gfc-1.x" "java-util@gfc-1.x" \
+  "java-dto@gfc-2.x" "java-dtokit@gfc-1.x" \
+  "java-orm@mybatis-1.x" "java-orm@mybatis-2.x" "java-orm@rdbms-1.x" \
+  "java-test@postman-1.x" "java-mvc@spring-2.x" \
+  "java-tx@gfc-1.x" "java-tx@jakarta-2.x")
 
 for repo in "${REPOS[@]}"
 do
-export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/c/$repo
+export TEMPLATE_ROOT=$MODELBASE_DATA_ROOT/java/$repo
 
 java -jar $MODELBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -33,9 +37,9 @@ java -jar $MODELBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
-\"language\":\"c\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.java.JavaConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.java.JavaNamingConvention\",\
+\"language\":\"java\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
@@ -45,10 +49,10 @@ done
 
 ################################################################################
 ##                                                                            ##
-##                         COMMAND LINE INTERFACE (C)                         ##
+##                              SPRINGBOOT (JAVA)                             ##
 ##                                                                            ##
 ################################################################################
-export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/c/c-lib@cmake-1.x
+export TEMPLATE_ROOT=$PROJBASE_DATA_ROOT/java/java-backend@springboot-1.x
 
 java -jar $PROJBASE_JAR \
 --model=$MOBELBASE_MODEL \
@@ -62,17 +66,13 @@ java -jar $PROJBASE_JAR \
 \"artifact\":\"$APPNAME\",\
 \"version\":\"1.0.0\",\
 \"description\":\"\",\
-\"naming\":\"com.doublegsoft.jcommons.programming.c.CConventions\",\
-\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.c.CNamingConvention\",\
-\"language\":\"c\",\
+\"naming\":\"com.doublegsoft.jcommons.programming.java.JavaConventions\",\
+\"globalNamingConvention\":\"com.doublegsoft.jcommons.programming.java.JavaNamingConvention\",\
+\"language\":\"java\",\
 \"imports\":\
 \[\],\
 \"dependencies\":\
-\[\"poco\",\"sql\"\]\
+\[\]\
 \} 2>&1
 
-WD=$PWD
-mkdir -p $PROJECT_ROOT/build/darwin && cd $PROJECT_ROOT/build/darwin
-/opt/homebrew/bin/cmake ../.. && make
-ctest --output-on-failure
-
+mvn clean package -f $PROJECT_ROOT/pom.xml

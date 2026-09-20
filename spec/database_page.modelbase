@@ -1,0 +1,154 @@
+// =============================================================================
+// 文件名: database_page.mb
+// 描述: 数据库物理数据页 / 存储页实现结构定义 (Slotted-Page Architecture)
+// =============================================================================
+
+// =============================================================================
+// 1. 数据页文件头 (File & Page Header)
+// 记录页的元数据、校验和、B+树双向链表指针以及 LSN
+// =============================================================================
+@persistence(name='db_page_hdr')
+@name(label='数据页文件头')
+page_header<
+
+  @name(label='页号(Page Offset / ID)')
+  page_no!!: long,
+
+  @name(label='所属表空间标识(Space ID)')
+  space_id!: long,
+
+  @name(label='前一页页号(B+树同层双向链表)')
+  prev_page_no: long,
+
+  @name(label='后一页页号(B+树同层双向链表)')
+  next_page_no: long,
+
+  @name(label='页类型')
+  page_type!: enum[
+    INDEX:B树索引与数据页,
+    UNDO:回滚撤销页,
+    INODE:索引节点页,
+    SYS:系统管理页,
+    BLOB:大对象溢出页
+  ],
+
+  @name(label='日志序列号(Page LSN)')
+  page_lsn!: long,
+
+  @name(label='页头校验和(Checksum)')
+  checksum!: string(32),
+
+  @name(label='有效记录总数')
+  record_count: int,
+
+  @name(label='已删除记录总数(软删除待GC)')
+  deleted_record_count: int,
+
+  @name(label='当前可用空闲空间起始偏移量')
+  free_space_offset!: int,
+
+  @name(label='页目录槽位总数')
+  slot_count!: int
+>
+
+
+// =============================================================================
+// 2. 页目录槽位 (Page Directory Slot)
+// 稀疏索引槽，数据库利用其在 16KB 页内进行二分快速定位行记录
+// =============================================================================
+@name(label='页目录槽位')
+page_slot<
+
+  @name(label='槽位编号')
+  slot_no!!: int,
+
+  @name(label='所指向行记录在页内的相对字节偏移')
+  record_offset!: int,
+
+  @name(label='该槽位所管辖的记录数(n_owned)')
+  owned_count: int
+>
+
+
+// =============================================================================
+// 3. 物理行记录头 (Record Header)
+// 每一条写入页内的底层行元数据（标记状态、下一条记录指针、MVCC版本）
+// =============================================================================
+@name(label='行记录头元数据')
+record_header<
+
+  @name(label='软删除标记位(delete_mask)')
+  is_deleted = false: bool,
+
+  @name(label='B+树非叶子节点最小记录标记(min_rec_mask)')
+  is_min_rec = false: bool,
+
+  @name(label='单页内堆序号(heap_no)')
+  heap_no: int,
+
+  @name(label='页内下一条记录的相对偏移指针(next_record)')
+  next_record_offset: int,
+
+  @name(label='事务ID(MVCC trx_id)')
+  trx_id: long,
+
+  @name(label='回滚段指针(MVCC roll_ptr)')
+  roll_ptr: string(64)
+>
+
+
+// =============================================================================
+// 4. 物理行记录载荷 (Page Record)
+// =============================================================================
+@name(label='物理行记录单元')
+page_record<
+
+  @name(label='行物理偏移标识')
+  offset!!: int,
+
+  @name(label='行记录头')
+  header: &record_header(heap_no),
+
+  @name(label='实际二进制/变长行数据载荷')
+  payload!: string(8192)
+>
+
+
+// =============================================================================
+// 5. 数据页尾 (Page Trailer)
+// 页面刷盘（Flush）时的防双写撕裂校验（Torn-Page Protection）
+// =============================================================================
+@name(label='数据页尾部校验')
+page_trailer<
+
+  @name(label='低位校验和(与页头比对验证一致性)')
+  checksum!: string(32),
+
+  @name(label='页尾LSN低4字节')
+  page_lsn_low: long
+>
+
+
+// =============================================================================
+// 6. 完整数据库物理数据页聚合根 (Database Page Aggregate)
+// 规范了一个标准磁盘页/内存缓冲页（Buffer Pool Page）的完整物理结构
+// =============================================================================
+@aggregate
+@name(label='数据库物理数据页')
+database_page<
+
+  @name(label='页物理大小(如 4096 / 8192 / 16384 字节)')
+  page_size = 16384: int,
+
+  @name(label='页头元信息')
+  header: &page_header(page_no),
+
+  @name(label='页目录槽位列表(二分查找用)')
+  slots: &page_slot(slot_no)[],
+
+  @name(label='页内行记录链表')
+  records: &page_record(offset)[],
+
+  @name(label='页尾校验信息')
+  trailer: &page_trailer(checksum)
+>

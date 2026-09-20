@@ -129,11 +129,6 @@ svc_dtl<
   @name(label='服务明细标识')
   id!!: long,
 
-  // 所属账单 (外键指向 bill)
-  @persistence(name='billid')
-  @name(label='所属账单')
-  bill!: &bill(id),
-
   // 所属账户 (外键指向 account)
   @persistence(name='acctid')
   @name(label='所属账户')

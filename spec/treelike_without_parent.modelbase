@@ -68,7 +68,7 @@ plain_tree_node<
 
   @name(label='节点类型')
   @original(object='tree_node', attribute='type')
-  node_type: string(50),
+  node_type: enum[RT:根节点,BR:分支节点,LF:叶子节点],
 
   // 引用对象平铺信息
   @name(label='分类标识')

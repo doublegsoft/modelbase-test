@@ -95,16 +95,11 @@ third_object<
   @persistence(name='enttyp')
   @name(label='类型')
   type: enum[OBJ:对象,SCN:场景,ERR:错误,CAP:容量],
-  
-  @persistence(name='frthobj')
-  @name(label='名称')
-  fourth_object: &fourth_object(id),
 
   @persistence(name='tit')
   @name(label='标题')
   title: string(500),
   
-
   @persistence(name='descr')
   @name(label='描述')
   description: string(2000),
@@ -142,6 +137,10 @@ fourth_object<
   @persistence(name='defn')
   @name(label='定义')
   definition: string(3000),
+  
+  @persistence(name='throbj')
+  @name(label='名称')
+  third_object: &third_object(id),
 
   @persistence(name='stab')
   @name(label='认知程度')

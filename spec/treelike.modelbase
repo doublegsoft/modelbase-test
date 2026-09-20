@@ -51,11 +51,11 @@ plain_tree_node<
 
   @name(label='节点类型')
   @original(object='tree_node', attribute='type')
-  node_type: string(50),
+  node_type: enum[RT:根节点,BR:分支节点,LF:叶子节点],
 
   // 父节点平铺信息
   @name(label='父节点标识')
-  @original(object='tree_node', attribute='parent')
+  @original(object='tree_node', attribute='id')
   parent_id: long,
 
   @name(label='父节点名称')

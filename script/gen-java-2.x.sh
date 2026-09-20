@@ -1,6 +1,7 @@
 script/java/gen-plainlike.sh
+script/java/gen-plainlike_indirect.sh
 script/java/gen-treelike.sh
-script/java/gen-treelike_without_parent.sh
+script/java/gen-treelike_with_parent.sh
 script/java/gen-aggregatelike.sh
 script/java/gen-aggregatelike_meta.sh
 script/java/gen-aggregatelike_reverse.sh
@@ -22,3 +23,6 @@ script/java/gen-o2ma.sh
 script/java/gen-ifelse.sh
 script/java/gen-canvas.sh
 script/java/gen-match_aggregatelike.sh
+script/java/gen-bill.sh
+script/java/gen-thirdparty@feign.sh
+script/java/gen-custom-business.sh
