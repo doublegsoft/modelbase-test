@@ -4,3 +4,4 @@ out
 /.project
 *.log
 *.o
+check_log
