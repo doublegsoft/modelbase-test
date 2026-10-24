@@ -2,28 +2,40 @@
 @name(label='IPv4')
 ipv4<
 
+  @name(label='协议版本')
   version: bit(4),
   
+  @name(label='首部长度')
   ihl: bit(4),
   
+  @name(label='服务类型')
   tos: bit(8),
   
+  @name(label='总长度')
   total_length: bit(16),
   
+  @name(label='标志位')
   flags: bit(4),
   
+  @name(label='片偏移')
   fragment_offset: bit(16),
   
+  @name(label='生存时间')
   ttl: bit(8),
   
+  @name(label='传输层协议')
   protocol: bit(8),
   
+  @name(label='首部校验和')
   checksum: bit(16),
   
+  @name(label='源IP地址')
   source_ip_address: bit(32),
   
+  @name(label='目的IP地址')
   desination_ip_address: bit(32),
   
+  @name(label='可选项')
   options: bit(32)
 
 >
@@ -32,16 +44,22 @@ ipv4<
 @name(label='业务')
 text_message<
 
+  @name(label='魔数标识')
   magic=1234: byte(4),
   
+  @name(label='发送者')
   sender: string(16),
   
-  message_len: int,
+  @name(label='消息正文长度')
+  message_len: byte(4),
   
+  @name(label='消息正文')
   message: string(message_len),
   
-  attachment_count: int,
+  @name(label='附件总数')
+  attachment_count: byte(4),
   
+  @name(label='附件列表')
   attachments: &attachment[attachment_count]
 >
 
@@ -49,12 +67,16 @@ text_message<
 @name(label='附件')
 attachment<
 
-  length: int,
+  @name(label='标题长度')
+  length: byte(4),
   
+  @name(label='附件标题')
   title: string(length),
 
-  size: int,
+  @name(label='数据大小')
+  size: byte(4),
   
+  @name(label='二进制数据')
   data: byte(size)
 
 >

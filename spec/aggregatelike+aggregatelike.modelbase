@@ -63,6 +63,10 @@ second_object<
   @persistence(name='cogntgnm')
   @name(label='名称')
   name: string(200),
+  
+  @persistence(name='fstobj')
+  @name(label='第一对象')
+  first_object: &first_object(id),
 
   @persistence(name='descr')
   description: string(1000),
@@ -83,6 +87,10 @@ third_object<
   @persistence(name='cognentnm')
   @name(label='名称')
   name: string(200),
+  
+  @persistence(name='fstobj')
+  @name(label='第一对象')
+  first_object: &first_object(id),
 
   @persistence(name='enttyp')
   @name(label='类型')
@@ -159,6 +167,10 @@ fifth_object<
   @persistence(name='cogntopnm')
   @name(label='主题名称')
   name: string(200),
+  
+  @persistence(name='fthobj')
+  @name(label='第四对象')
+  fourth_object: &fourth_object(id),
 
   @persistence(name='tit')
   @name(label='标题')
@@ -182,6 +194,7 @@ fifth_object<
 >
 
 @name(label='congnition_aggregate', plural='aggregate_objects')
+@aggregate
 aggregate_object<
 
   @name(label='cognentid')
@@ -198,6 +211,7 @@ aggregate_object<
 >
 
 @name(label='aggregate_object_another', plural='aggregate_object_anothers')
+@aggregate
 aggregate_object_another<
 
   @name(label='cognentid')

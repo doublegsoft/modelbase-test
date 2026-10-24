@@ -116,14 +116,6 @@ first_object<
   @persistence(name='dur')
   @name(label='时长')
   duration: long,
-  
-  @persistence(name='second_object')
-  @name(label='第二对象')
-  second_object: &second_object(id),
-  
-  @persistence(name='third_object')
-  @name(label='第三对象')
-  third_object: &third_object(id),
 
   @persistence(name='crttm')
   @name(label='创建时间')
@@ -146,6 +138,10 @@ second_object<
   @persistence(name='cogntgnm')
   @name(label='名称')
   name: string(200),
+  
+  @persistence(name='cogncepid')
+  @name(label='标识')
+  metable_object!: &metable_object(id),
 
   @persistence(name='descr')
   description: string(1000),
@@ -166,6 +162,10 @@ third_object<
   @persistence(name='cognentnm')
   @name(label='名称')
   name: string(200),
+  
+  @persistence(name='cogncepid')
+  @name(label='标识')
+  metable_object!: &metable_object(id),
 
   @persistence(name='enttyp')
   @name(label='类型')

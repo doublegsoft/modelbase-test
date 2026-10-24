@@ -58,6 +58,7 @@ another_object<
 >
 
 @name(label='简单聚合对象', singular='simple_aggregate', plural='simple_aggregates')
+@aggregate
 simple_aggregate<
  
   @name(label='简单对象')
