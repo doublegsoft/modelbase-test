@@ -15,7 +15,7 @@ export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"@lib
 ##                                      C                                     ##
 ##                                                                            ##
 ################################################################################
-REPOS=("c-poco@std-1.x" "c-codec@std-1.x")
+REPOS=("c-poco@std-1.x" "c-codec@std-1.x" "c-error@std-1.x")
 
 for repo in "${REPOS[@]}"
 do

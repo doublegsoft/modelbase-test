@@ -45,7 +45,7 @@ ipv4<
 text_message<
 
   @name(label='魔数标识')
-  magic=1234: byte(4),
+  magic=1234: int,
   
   @name(label='发送者')
   sender: string(16),

@@ -26,3 +26,4 @@ script/java/gen-match_aggregatelike.sh
 script/java/gen-bill.sh
 script/java/gen-thirdparty@feign.sh
 script/java/gen-custom-business.sh
+script/java/gen-special-types.sh

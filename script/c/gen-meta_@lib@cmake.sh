@@ -7,7 +7,7 @@ export OUTPUT_ROOT=out/c
 
 export SPEC=meta_
 export APPNAME=meta
-export NAMESPACE=app
+export NAMESPACE=mt
 export MOBELBASE_MODEL=spec/$SPEC.modelbase
 export PROJECT_ROOT=$OUTPUT_ROOT/"$SPEC"@lib
 ################################################################################

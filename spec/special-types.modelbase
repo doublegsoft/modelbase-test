@@ -1,0 +1,65 @@
+// =============================================================================
+// 1. 客户账户实体 (Account)
+// =============================================================================
+@entity
+@persistence(name='tn_bil_acct')
+@name(label='客户账户', plural='accounts')
+@xlsx
+@docx
+account<
+
+  @persistence(name='acctid')
+  @name(label='账户标识')
+  id!!: long,
+
+  @persistence(name='acctno')
+  @name(label='账户编号')
+  account_no!: string(64),
+
+  @persistence(name='custnm')
+  @name(label='客户姓名')
+  customer_name!: string(200),
+
+  @persistence(name='accttyp')
+  @name(label='账户类型')
+  type: enum[IND:个人,CORP:企业,GOV:政府机构],
+
+  @persistence(name='biladdr')
+  @name(label='账单寄送地址')
+  billing_address: string(500),
+
+  @persistence(name='currcd')
+  @name(label='币种')
+  currency = 'HKD': string(10),
+
+  @persistence(name='sts')
+  @name(label='账户状态')
+  status!: enum[AC:正常,SP:暂停,CL:销户],
+  
+  @persistence(name='tgs')
+  @name(label='账户标签')
+  tags: strings(200),
+  
+  @persistence(name='pps')
+  @name(label='扩展属性')
+  props: { account_meta },
+
+  @persistence(name='crttm')
+  @name(label='创建时间')
+  created_time = now: datetime,
+
+  @persistence(name='updtm')
+  @name(label='更新时间')
+  updated_time: now
+>
+
+@name(label='客户账户属性扩展', plural='account_metas')
+account_meta<
+  
+  likes = 0: int,
+  
+  views = 0: int,
+  
+  thumbs = 0: int
+  
+>
