@@ -7,6 +7,7 @@ script/java/gen-aggregatelike_meta.sh
 script/java/gen-aggregatelike_reverse.sh
 script/java/gen-aggregatelike_o2o.sh
 script/java/gen-aggregatelike_ref_aggregatelike.sh
+script/java/gen-aggregatelike.sh
 script/java/gen-extension-details.sh
 script/java/gen-extension-master.sh
 script/java/gen-graph.sh
@@ -27,3 +28,5 @@ script/java/gen-bill.sh
 script/java/gen-thirdparty@feign.sh
 script/java/gen-custom-business.sh
 script/java/gen-special-types.sh
+script/java/gen-event-sourcing.sh
+script/java/gen-zipper.sh

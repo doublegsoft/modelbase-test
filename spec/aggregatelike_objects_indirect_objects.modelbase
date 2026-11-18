@@ -214,13 +214,11 @@ aggregate_object<
   
   @name(label='cognentid')
   @conjunction(source_object='first_object',
-               source_attribute='id',
-               source_attributes='id, #FIRST_OBJECT',
+               // source_attribute='id',
+               source_attributes='id, "FIRST_OBJECT"',
                target_object='fourth_object',
-               target_attribute='reference_id',
-               type_attribute='reference_type',
-               type_value='FIRST_OBJECT',
-               target_attributes='reference_id,reference_type')
+               // target_attribute='reference_id',
+               target_attributes='reference_id, reference_type')
   fourth_object: &fourth_object(id),
 
   @name(label='cogncepid')

@@ -1,0 +1,107 @@
+@module(name='mtr', text='metering management')
+
+// ==========================================
+// 1. 抄表流水（不可变日志：只增不改）
+// ==========================================
+@entity
+@persistence(name='tn_mtr_readlog')
+@name(label='抄表流水', singular='meter_reading_log', plural='meter_reading_logs')
+meter_reading_log<
+
+  @persistence(name='readlogid')
+  @name(label='抄表流水标识')
+  id!!: id,
+
+  @persistence(name='mtrid')
+  @name(label='表具标识')
+  meter_id: long,
+
+  @persistence(name='billprd')
+  @name(label='抄表账期')
+  billing_period: string(10),
+
+  @persistence(name='acttyp')
+  @name(label='记录类型')
+  action_type: enum[
+    NM:NORMAL('正常抄表'),
+    CR:CORRECTION('纠错重抄'),
+    VD:VOID('作废冲销')
+  ],
+
+  @persistence(name='readval')
+  @name(label='表显读数')
+  reading_value: number(14,4),
+
+  @persistence(name='refreadlogid')
+  @name(label='被纠正原流水')
+  ref_reading: &meter_reading_log(id),
+
+  @persistence(name='prevreadlogid')
+  @name(label='前次有效流水')
+  prev_reading: &meter_reading_log(id),
+
+  @persistence(name='readtm')
+  @name(label='实际抄表时间')
+  read_time: datetime,
+
+  @persistence(name='rdrid')
+  @name(label='抄表员标识')
+  @reference(name='user', value='id')
+  reader_id: string(32),
+
+  @persistence(name='srctyp')
+  @name(label='数据来源')
+  source_type: enum[
+    AP:APP('手持终端'),
+    IO:IOT('物联网自动'),
+    MN:MANUAL('人工补录')
+  ],
+
+  @persistence(name='photourl')
+  @name(label='表盘照片凭证')
+  photo_url: string(255),
+
+  @persistence(name='reason')
+  @name(label='重抄/纠错原因')
+  reason: string(200),
+
+  @persistence(name='createdat')
+  @name(label='入库时间')
+  created_at: datetime,
+
+  @persistence(name='createdby')
+  @name(label='操作人')
+  created_by: string(50),
+
+  @name(label='关联纠错/作废流水集合', singular='correction_log')
+  correction_logs: &meter_reading_log(ref_reading)[]
+>
+
+// ==========================================
+// 2. 当前有效抄表指针（按表具+账期指向最新有效流水）
+// ==========================================
+@entity
+@persistence(name='tn_mtr_readeff')
+@name(label='有效抄表记录', singular='meter_reading_effective', plural='meter_reading_effectives')
+meter_reading_effective<
+
+  @persistence(name='mtrid')
+  @name(label='表具标识')
+  meter_id!!: id,
+
+  @persistence(name='billprd')
+  @name(label='抄表账期')
+  billing_period!!: string(10),
+
+  @persistence(name='effreadlogid')
+  @name(label='当前有效流水')
+  effective_reading: &meter_reading_log(id),
+
+  @persistence(name='effval')
+  @name(label='有效读数')
+  effective_value: number(14,4),
+
+  @persistence(name='updatedat')
+  @name(label='更新时间')
+  updated_at: datetime
+>

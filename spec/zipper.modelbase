@@ -1,0 +1,109 @@
+@module(name='mtr', text='metering management')
+
+// ==========================================
+// 抄表记录拉链表（关旧链 + 开新链，保留全量历史切片）
+// 逻辑唯一约束建议：
+//   1. (meter_id, billing_period, valid_from)
+//   2. 当前有效唯一索引：(meter_id, billing_period) WHERE is_current = 'Y'
+// ==========================================
+@entity
+@persistence(name='tn_mtr_readzip')
+@name(label='抄表拉链表', singular='meter_reading_zipper', plural='meter_reading_zippers')
+meter_reading_zipper<
+
+  @persistence(name='readzipid')
+  @name(label='拉链记录标识')
+  id!!: id,
+
+  @persistence(name='mtrid')
+  @name(label='表具标识')
+  meter_id: long,
+
+  @persistence(name='billprd')
+  @name(label='抄表账期')
+  billing_period: string(10),
+
+  // ---------- 拉链核心控制字段 ----------
+  @persistence(name='verno')
+  @name(label='版本号')
+  version_no: long,
+
+  @persistence(name='validfm')
+  @name(label='生效时间（左闭）')
+  valid_from: datetime,
+
+  @persistence(name='validto')
+  @name(label='失效时间（右开，当前版本为 9999-12-31 23:59:59）')
+  valid_to: datetime,
+
+  @persistence(name='iscur')
+  @name(label='是否当前最新版本')
+  is_current: enum[
+    Y:YES('是'),
+    N:NO('否')
+  ],
+
+  @persistence(name='recsts')
+  @name(label='业务有效状态')
+  status: enum[
+    EF:EFFECTIVE('有效'),
+    VD:VOIDED('已作废')
+  ],
+  // ------------------------------------
+
+  @persistence(name='acttyp')
+  @name(label='变更动作类型')
+  action_type: enum[
+    NM:NORMAL('正常抄表'),
+    CR:CORRECTION('纠错重抄'),
+    VD:VOID('作废冲销')
+  ],
+
+  @persistence(name='readval')
+  @name(label='表显读数')
+  reading_value: number(14,4),
+
+  @persistence(name='prevverid')
+  @name(label='被替代的上一版本')
+  prev_version: &meter_reading_zipper(id),
+
+  @persistence(name='prevreadid')
+  @name(label='上期/前次有效抄表')
+  prev_reading: &meter_reading_zipper(id),
+
+  @persistence(name='readtm')
+  @name(label='实际抄表时间')
+  read_time: datetime,
+
+  @persistence(name='rdrid')
+  @name(label='抄表员标识')
+  @reference(name='user', value='id')
+  reader_id: string(32),
+
+  @persistence(name='srctyp')
+  @name(label='数据来源')
+  source_type: enum[
+    AP:APP('手持终端'),
+    IO:IOT('物联网自动'),
+    MN:MANUAL('人工补录')
+  ],
+
+  @persistence(name='photourl')
+  @name(label='表盘照片凭证')
+  photo_url: string(255),
+
+  @persistence(name='reason')
+  @name(label='重抄/纠错原因')
+  reason: string(200),
+
+  @persistence(name='createdat')
+  @name(label='入库/开链时间')
+  created_at: datetime,
+
+  @persistence(name='createdby')
+  @name(label='操作人')
+  created_by: string(50),
+
+  @name(label='后续变更版本集合', singular='next_version')
+  next_versions: &meter_reading_zipper(prev_version)[]
+>
